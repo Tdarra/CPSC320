@@ -148,6 +148,7 @@
 \usepackage{dirtytalk}    %quotations: use \say  
 \usepackage{wasysym} 	 % \smiley{} \frownie{} \blacksmiley{}
 \usepackage{hyperref}
+\usepackage{algpseudocode}
 
 
 %================================== Header & Footer =======================================
@@ -294,6 +295,212 @@ of \textbf{just} your reduction, \textbf{not} including the call to the sorting
 algorithm. So, for the purposes of this asymptotic bound, you can
 imagine that we somehow solve sorting in constant time. (Note: it's
 possible to give a reduction that takes $O(n)$ time.)
+
+
+
+
+\section{Exhausted of Marriage}
+
+We modify SMP with the very reasonable change that not every woman
+need list every man in her preferences. She prefers to be unmarried to
+marrying unlisted men. Note that she clearly prefers any man on her
+preference list to any man not on her preference list. Men can
+similarly truncate their lists of women.
+
+Here is the Gale-Shapley algorithm:
+  \begin{algorithmic}[1]
+  \Procedure{Stable-Marriage}{$M$, $W$}
+    \State initialize all men in $M$ and women in $W$ to unengaged
+    \While {an unengaged man with at least one woman on his preference list remains}
+      \State choose such a man $m \in M$
+      \State propose to the next woman $w \in W$ on his preference list
+      \If {$w$ is unengaged}
+        \State engage $m$ to $w$
+      \ElsIf {$w$ prefers $m$ to her fianc\'e $m'$}
+        \State break engagement of $m'$ to $w$
+        \State engage $m$ to $w$
+      \EndIf
+      \State cross $w$ off $m$'s preference list
+    \EndWhile
+    \State report the set of engaged pairs as the final matching
+  \EndProcedure
+  \end{algorithmic}
+With one small change, we can apply this algorithm and ensure that the
+(not necessarily perfect) matching produced never marries a person to
+someone they left off of their preference list.
+\begin{enumerate}
+\item Make the small change necessary \textbf{to the algorithm above}.
+\item Briefly sketch the key elements of a proof that the algorithm
+   terminates.
+\item We need a new definition of instability now that some people may
+   end up unmarried. Here is one new type of instability that we call
+   an \emph{elopement instability}: m$_i$ and w$_j$ are both unmarried but list
+   each other on their preference lists (in which case they have
+   incentive to break the imposed matching and marry each other).
+   
+   Describe another new type of instability involving an unmarried
+   woman. (Note: an analogous instability exists involving an
+   unmarried man.)
+\item Briefly sketch the key elements of a proof that your modified G-S
+   algorithm cannot generate an elopement instability.
+\end{enumerate}
+\subsection{Even More Exhausted}
+
+Briefly sketch the key elements of a proof that your modified G-S
+algorithm cannot generate any of the other three types of instability
+(the classic SMP instability, the instability you defined above, and
+the analogous instability with the roles of men and women swapped).
+\section{Footblog}
+
+The massive social network Footblog tracks relationships based on
+whether two people have ``enemied'' each other. (``Enemyship'' is a mutual
+agreement, meaning that a person is not allowed to ``enemy'' another
+person unless the other person agrees to ``enemy'' them back. No one can
+``enemy'' themselves.)
+\subsection{Isolationism}
+
+We investigate whether Footblog's network is a single connected
+component.
+
+Footblog's founder created the first Footblog account, and that
+account has no ``sponsor'' (and cannot be assigned one). Every other
+account must have a single, designated ``sponsor'' who they have
+``enemied''. If $a$ sponsors $b$, we call $b$ the \emph{sponsee} of $a$.
+
+There are then four major actions to consider on Footblog, some of
+which involve others as steps:
+\begin{description}
+\item[\emph{Joining}] When a new Footblog member joins, they must do so by
+               choosing as sponsor (and ``enemying'') someone already in
+               the network who agrees to be their sponsor (and their
+               enemy). After members join, they're free to ``enemy''
+               and ``unenemy'' anyone except their sponsor and their
+               sponsees.
+\item[\emph{Enemying}] Already described above. Remember that when one person
+                ``enemies'' another, the other must agree to ``enemy''
+                that person back.
+\item[\emph{Un-Enemying}] Unlike making an ``enemy'' link, one person alone can
+                   ``unenemy'' another person, in which case neither
+                   ``enemies'' the other any more.
+\item[\emph{Change Sponsor}] If a person wishes to change their sponsor, they
+     must ``unenemy'' their sponsor and simultaneously ``enemy'' a new
+     sponsor. The new sponsor must agree to act as sponsor and enemy
+     and \textbf{must be a new enemy} (i.e., must not already be the person's
+     enemy). Note that while a sponsee can choose to change their
+     sponsor, a sponsor cannot choose to change their sponsee.
+\end{description}
+
+You may assume these actions never happen in parallel, i.e., a defined
+sequence occurs of the operations: joining, enemying, un-enemying, and
+changing sponsors.
+\begin{enumerate}
+\item Based on these rules, sketch a brief proof that when a person
+   changes their sponsor, their new sponsor cannot also be one of
+   their sponsees.
+\item Based on these rules, either \textbf{sketch the key points in a proof that    Footblog's enemy graph forms a single connected component} or \textbf{give    a small sequence of actions that creates multiple components}.
+   
+   Circle \textbf{one}: \hfill \textbf{SINGLE ONLY} \hfill \textbf{MAY BE MULTIPLE} \hfill
+
+   \textbf{Provide your proof sketch or example:}
+\end{enumerate}
+\subsection{Centrality}
+
+Footblog has defined a notion of ``centrality'' for its users: a user's
+``centrality'' is the minimum number of people they'd need to go through
+to get a message to the person farthest from them on the network,
+following ``enemy'' links. (The ``farthest'' person is exactly the one to
+whom there is the longest minimum-length path of enemies.)
+
+For this problem, \textbf{assume that the Footblog network does indeed form a single connected component.}
+
+Briefly describe an algorithm to compute the centrality of a user
+given a graph $G$ represented as a number of users $n > 0$ (where the
+users themselves are vertices named $\{v_1, v_2, \ldots, v_n\}$, a
+vertex number $i$ (where $1 \leq i \leq n$) of the user whose
+centrality we wish to compute, and an adjacency list $A$ of edges
+(i.e., an array of linked lists, where the entries in the list $A[j]$
+are the vertex numbers of the users $j$ has ``enemied''). You may use
+any common data structures you need. \textbf{Your algorithm must run in linear (i.e., $O(n + m)$ for $n$ nodes and $m$ edges) time.}
+
+
+\begin{verbatim}
+Centrality(n, i, A):
+  // Fill in your algorithm here!
+\end{verbatim}
+\section{Heaps of Fun Might Be OK}
+
+You're managing a major online tournament of the hot new game Flappy
+Squirrel. There are a huge number of users, each with a
+competitiveness rating (a floating point number). You need an
+algorithm that---given a desired number of competitors $c$ and a list
+of these competitiveness ratings (an array $A$ of length
+$n$)---returns a list of the $c$ highest ratings. You're guaranteed
+that $c \leq n$. (Note: we use 1-based indexing on arrays.)
+\subsection{Algorithm 1}
+
+Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this
+problem. (\textbf{Note:} the \texttt{buildMaxHeap} operation returns a max-heap
+built from the elements of a given array of length $n$ in $O(n)$
+time.)
+
+\begin{verbatim}
+TopC(A, c):
+  best <- empty list
+  h <- buildMaxHeap(A)
+  for i = 1 to c:
+    add findMax(h) to best
+    deleteMax(h)
+  return best
+\end{verbatim}
+\subsection{Algorithm 2}
+
+Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this
+problem. (Note: the notation \texttt{A[1..c]} produces a list of the elements
+\texttt{A[1], A[2], A[3], ..., A[c]} in $O(c)$ time.)
+
+\begin{verbatim}
+TopC(A, c):
+  for i = 1 to c:
+    maxIndex = i
+    for j = i+1 to n:
+      if A[j] > A[maxIndex]:
+        maxIndex = j
+    max = A[maxIndex]
+    A[maxIndex] = A[i]
+    A[i] = max
+  return A[1..c]
+\end{verbatim}
+\subsection{Algorithm 3}
+
+Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this
+problem.
+
+\begin{verbatim}
+TopC(A, c):
+  sort A using an efficient, comparison-based sorting algorithm
+  return A[1..c]
+\end{verbatim}
+\subsection{Algorithm 4}
+
+Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this
+problem. (Note: \texttt{Elements(h)} produces all elements in the heap \texttt{h} in
+constant time, but \texttt{h} can no longer be used after that point.)
+
+\begin{verbatim}
+TopC(A, c):
+  h <- empty min-heap
+  for i = 1 to n:
+    if Size(h) < c:
+      Insert(h, A[i])
+    else if A[i] > FindMin(h):
+      DeleteMin(h)
+      Insert(h, A[i])
+  return Elements(h)
+\end{verbatim}
 
 
 \end{document} 
