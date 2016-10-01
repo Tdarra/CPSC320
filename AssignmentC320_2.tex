@@ -1,0 +1,299 @@
+% ======================= Pre-Amble =========================
+      
+%Format
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format 
+                     						%imports package {article} and specify option(s) [11pt, oneside]
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots. 
+    \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+    %\geometry{landscape}                		% Activate for rotated page geometry
+
+\usepackage[parfill]{parskip}    		        % Activate to begin paragraphs with an empty line rather than an indent
+
+    %Colours
+    \usepackage{graphicx, subcaption}
+    \usepackage[usenames, dvipsnames]{color}     % font colour:    \textcolor{<colour>}{text}
+          									%highlight text:  \colorbox{<color>}{text}
+    \usepackage{soul}						%highlight text: \hl{}     %only  yellow								
+    									%list of colours: https://www.sharelatex.com/learn/Using_colours_in_LaTeX
+    									
+    %Bullets
+    \usepackage{enumerate}     %specify type of enumeration: \being{enumerate}[<type of enumeration>]
+    
+    %Footnote Spacing
+    \setlength{\footnotesep}{0.4cm}                  %specify spacing b/w footnotes
+    \setlength{\skip\footins}{0.6cm}                    % space b/w footnotes and textbody
+
+	%Sections
+%	\makeatletter
+%	% we use \prefix@<level> only if it is defined
+%	\renewcommand{\@seccntformat}[1]{
+%	  \ifcsname prefix@#1\endcsname
+%	    \csname prefix@#1\endcsname
+%	  \else
+%	    \csname the#1\endcsname\quad 
+%	  \fi}
+%	% define \prefix@section
+%	\newcommand\prefix@section{Question \thesection}
+%	\makeatother
+
+%	\makeatletter
+%	\def\@seccntformat#1{%
+%	  \expandafter\ifx\csname c@#1\endcsname\c@section
+%	  Question \thesection
+%	  \else
+%	  \csname the#1\endcsname\quad
+%	  \fi}
+%	\makeatother
+
+
+
+%Mattematics
+    %American Mathematics Society packages
+    \usepackage{amsmath}	   %math
+    \usepackage{amssymb}       %symbols
+    \usepackage{amsthm}          %theorems
+    \newtheorem{proposition}{Proposition}
+
+    %QED
+    \newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}         %make qed filled square:    \QEDA
+    \newcommand*{\QEDB}{\hfill\ensuremath{\square}}               %make qed empty square: \QEDB 
+    \renewcommand\qedsymbol{\ensuremath{\blacksquare}}		%Proof environment
+    
+    % Proofs
+	\newtheorem{thm}{Theorem}[section]
+	\newtheorem{lem}[thm]{Lemma}
+	\newtheorem{prop}[thm]{Proposition}
+	\newtheorem*{cor}{Corollary}
+	
+	\theoremstyle{definition}
+	\newtheorem{defn}{Definition}[section]
+	\newtheorem{conj}{Conjecture}[section]
+	\newtheorem{exmp}{Example}[section]
+	
+	\theoremstyle{remark}
+	\newtheorem*{rem}{Remark}
+	\newtheorem*{note}{Note}
+	
+	% Symbol Shortcuts
+	\newcommand{\R}{\ensuremath{\mathbb{R}}}
+	\newcommand{\C}{\ensuremath{\mathbb{C}}}
+	\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+	\newcommand{\Q}{\mathbb{Q}}
+	\newcommand{\N}{\mathbb{N}}
+	
+	% Augmented Matrix
+	\makeatletter
+	\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  	\hskip -\arraycolsep
+ 		 \let\@ifnextchar\new@ifnextchar
+ 		 \array{#1}}
+	\makeatother
+	
+    %\numberwithin{counterA}{counterB} 	% replaces counterA by counterb.countera
+	%\numberwithin{equation}{question} 	% for equations: (5) -> (6.1)
+    
+    % Spacing Units
+	\usepackage{siunitx}				% Syntax: \SI{value}{unit}
+								%	-> e.g. $\SI{-9.81}{ms^{-2}}$
+	
+    % MATLAB in sentence (need mcode.sty in folder)
+	%\usepackage[]{mcode} % http://www.mathworks.com/matlabcentral/fileexchange/8015-m-code-latex-package
+	% Syntax:
+	%	- In Sentence: \mcode{<code>}
+	%	- Block of code: \begin{lstlisting} <code> \end{lstlisting}
+	%	- Footnote: \footnote{ \mcodefn{ <code> } }
+	%	- External m-file
+	%		-> Entire file: \lstinputlisting{/SOME/PATH/FILENAME.M}
+	%		-> Certain lines (i.e. skip header): \lstinputlisting[firstline=6, lastline=15]{/SOME/PATH/FILENAME.M}
+
+
+
+%Figures
+\usepackage{caption}
+\captionsetup[figure]{labelfont=bf}    %make figure labels boldface
+\captionsetup[table]{labelfont=bf}     %make table labels boldface
+
+\usepackage[hidelinks]{hyperref}                % Allows for clickable references
+
+    %Tables
+    \usepackage[none]{hyphenat}                    % Stops breaking-up words in a table (i.e. no hyphens)                                                             
+    
+    \usepackage{array}   
+        \newcolumntype{x}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}       %center fixed column width: x{<len>}                      
+        \newcolumntype{$}{>{\global\let\currentrowstyle\relax}}                                 % let us apply things (e.g. bold/italicize) to entire row            
+        \newcolumntype{^}{>{\currentrowstyle}}
+        \newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1} #1\ignorespaces}
+    
+    %Images
+    \graphicspath{ {images/} }                          %directory that your images are located in within your current directory
+    
+    %Diagrams
+    \usepackage[latin1]{inputenc}
+    \usepackage{tikz}
+    	\tikzset{line/.style={-latex'}}
+        \usepackage{tkz-berge}
+        \usetikzlibrary{shapes,arrows}
+        \usetikzlibrary{patterns}			%Specify colours of stuff (e.g. vertices): 
+        										%	-> set style: \tikzset{VertexStyle/.append style = {minimum size = 8pt, inner sep = 0pt}} 
+											%	-> change individual vertices: \AddVertexColor{white}{1,2} 
+
+
+%Bibliography
+\usepackage[numbers,sort&compress]{natbib}   %for multiple references: sorts  (i.e. [1,2] NOT [2, 1] )
+                                           				  %                                     compresses (i.e. [1-3] )
+\usepackage[nottoc]{tocbibind}                            %add bibliography to table of contents
+
+
+%Miscellaneous
+\usepackage{dirtytalk}    %quotations: use \say  
+\usepackage{wasysym} 	 % \smiley{} \frownie{} \blacksmiley{}
+\usepackage{hyperref}
+
+
+%================================== Header & Footer =======================================
+\usepackage{fancyhdr}
+\usepackage{lastpage}      %ensures you can reference LastPage (i.e. Page 2 of 10)
+
+\renewcommand{\headrulewidth}{0.4pt}		%Decorative Header line: thickness={0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}		%Decorative Footer line: thickness={0.4pt}
+
+\setlength{\headheight}{13.6pt} 		%space b/w top of page & header
+\setlength{\headsep}{0.3in}		%space b/w page header and body
+
+%Make Header & Footer    
+\pagestyle{fancy}
+    \lhead{S. Knill and T. Darra} 		% controls the left corner of the header
+    \chead{} 					% controls the center of the header
+    \rhead{} 					% controls the right corner of the header
+    \lfoot{} 					% controls the left corner of the footer
+    \cfoot{Page~\thepage\ of \pageref{LastPage}} 				% controls the center of the footer
+    												%Page~\thepage\  if just want Page x
+    \rfoot{}			 		% controls the right corner of the footer
+
+
+% ================================== Document =============================================
+\begin{document}
+
+% Title Page
+\title{CPSC 320 --- Assignment 2 \\
+\line(1,0){360} \\              %(slope x, y){length of line}
+}
+\author{
+Stephanie Knill (54882113) \\
+Taj Darra (43350115) \\
+Due: October 6, 2016}
+
+\date{}                   % Activate:  display a given date (e.g. {August 4} ) or no date (empty {} )
+                                    %No activate: display current date
+\maketitle
+
+%\thispagestyle{empty}                   %Remove header from this (first) page. Change empty -> plain to keep numbering
+%								-> Doesn't matter in this case (b/c title page)
+%\cleardoublepage
+
+
+% ================= Questions ================
+
+\section*{Collaboration Policy}
+\emph{All group members have read and followed the guidelines for academic conduct in CPSC 320. As part of those rules, when collaborating with anyone outside my group, (1) I and my collaborators took no record but names away, and (2) after a suitable break, my group created the assignment I am submitting without help from anyone other than the course staff.}
+
+\section{Olympic Scheduling}
+You are in charge of a live-streaming YouTube channel for the Olympics
+that promises never to interrupt an event. (So, once you start playing
+an event, you must play only that event from the time it starts to the
+time it finishes.) You have a list of the events, where each event
+includes its: \textbf{start time, finish time (which must be after its start time), and expected audience value}. Your goal is to \textbf{make a schedule to broadcast the most valuable complete events}. \textbf{The best schedule is the one with the highest-valued event}; \textbf{in case of ties, compare second-highest valued events, and so on}. (So, for example, you
+obviously \textbf{will} include the single highest-valued event in the
+Olympics---presumably the hockey gold medal game---no matter what else
+it blocks you from showing.)
+
+(Times when you're not broadcasting events will be filled with ``human
+interest stories'' that have zero value; so, they're irrelevant.)
+
+\textbf{ASSUME: all event values are distinct and all event times are distinct.} I.e., for any two values $v_i$ and $v_j$ with $i \neq j$,
+$v_i \neq v_j$. The same holds for start and end times (e.g., for any
+two start times $s_i$ and $s_j$ with $i \neq j$, $s_i \neq
+s_j$). Further, for any two start and finish times $s_i$ and $f_j$,
+whether $i = j$ or not, $s_i \neq f_j$.
+\subsection{Na\"ive Algorithm}
+
+Consider the following algorithm. Assume that deleting an event from a
+list of events takes constant time.
+
+\begin{verbatim}
+Naive(E):
+  result = new empty list of events
+  while E is not empty:
+    bestEvent = E[0]
+    for each e in E:
+      if value(e) > value(bestEvent):
+        bestEvent = e
+    delete bestEvent from E
+    for each e in E:
+      if start(e) < finish(bestEvent) and finish(e) > start(bestEvent):
+        delete e from E
+    add bestEvent to result
+  return result
+\end{verbatim}
+\subsubsection{Finiteness}
+
+Briefly sketch a proof that the \texttt{while} loop in the algorithm above
+terminates. You need not give a formal proof, but you should include
+all key insights in the proof.
+\subsubsection{Efficiency}
+
+Give and briefly justify a good asymptotic bound on the runtime of the
+algorithm.
+\subsubsection{Correctness}
+Briefly sketch a proof that the algorithm is correct. You need not
+give a formal proof, but you should include all key insights in the
+proof.
+\subsection{Reduction on Simplified Problem}
+
+To make the Olympic Broadcasting problem simpler, we completely remove
+start time and finish times from the problem. So, now events only have
+values (not times), and a ``schedule'' is just a set of selected
+events. To make it slightly harder again, you are not allowed to
+select two events $i$ and $j$ if their values are within 10 units of
+each other: $|v_i - v_j| \leq 10$.
+
+Give a correct reduction from this simplified Olympic Broadcasting
+problem to the sorting problem (where you provide both a list of items
+and a function to compare two items). Your reduction should take $O(n
+\lg n)$ time.
+
+\textbf{NOTE:} You will likely find that (a) you can solve this with a single
+call to the sorting problem's solution algorithm and (b) producing the
+sorting instance is the easier part and transforming the solution to
+sorting into a solution to this simplified Olympic Broadcasting
+problem is the harder part. Don't forget to do both!
+\subsection{Olympic Reduction, BONUS ONLY}
+
+This was significantly harder than we intended it to be! So, we
+removed it from the quiz/assignment. It's a bonus problem worth two
+CPSC 320 bonus points for extremely clear, correct, and efficient
+responses. (Extremely clear reductions that take $O(n)$ time---not
+counting an $O(1)$ number of calls to a sorting algorithm---may
+receive 3 bonus points, but we don't know if such reductions are
+possible.)
+
+Give a correct and efficient reduction from the Olympic broadcasting
+problem to the sorting problem (where you provide both a list of items
+and a function to compare two items). Your reduction---combined with
+an $O(n \lg n)$ sorting algorithm---should be asymptotically more
+efficient than the na\"ive algorithm above.
+\subsubsection{Correctness}
+
+Briefly sketch a proof that your algorithm is correct. You need not
+give a formal proof, but you should include all key insights in the
+proof.
+\subsubsection{Efficiency}
+
+Give and briefly justify a good asymptotic bound on the runtime
+of \textbf{just} your reduction, \textbf{not} including the call to the sorting
+algorithm. So, for the purposes of this asymptotic bound, you can
+imagine that we somehow solve sorting in constant time. (Note: it's
+possible to give a reduction that takes $O(n)$ time.)
+
+
+\end{document} 
