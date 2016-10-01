@@ -241,14 +241,47 @@ Naive(E):
 Briefly sketch a proof that the \texttt{while} loop in the algorithm above
 terminates. You need not give a formal proof, but you should include
 all key insights in the proof.
+
+\textbf{Representing the problem:} Let $E$ denote the set of all events to be streamed $E=\left\{e_1, \dotsm, e_n\right\}$ where $n=|E|.$ For every event $e \in E$, let $e$ comprise an ordered triple $e_i = (v_i, s_i, f_i)$ where $v,s$ and $f$ denote the audience value, start time, and finish time accordingly.
+
+\begin{proof}
+Let $n$ be the cardinality of $E$ (i.e. $n=|E|$).
+
+\textbf{Base Case:} if $n = 0$, then the while loop is never intiated
+Otherwise if $n=1$ then the event $e$ where $e \in E$ is the bestEvent as assigned and is removed after the execution of the first for loop. 
+
+\textbf{Inductive Step:} Assume true for $n=k$ events, then for $n=k+1$ events we have two cases as such:
+\begin{itemize}
+	\item In the first case, we delete the bestEvent and no conflicting events leaving us with $n=k+1-1=k$. By the inductive assumption the algorithm holds true.
+	\item As for the second case, we delete the bestEvent and some number of events which leaves u with $n<k$. By the inductive step, the algorithm holds true.
+\end{itemize} 
+\end{proof}
 \subsubsection{Efficiency}
 
-Give and briefly justify a good asymptotic bound on the runtime of the
-algorithm.
+\textit{Give and briefly justify a good asymptotic bound on the runtime of the algorithm.}
+
+Assuming all elementary operation execute in constant time, the worst case executions are $O(n^2)$ where the worst case execution is defined as when we only delete the assigned bestEvent and there are no conflicts.  Within the outer while loop, the first for loop executes $n$ times for comparing the values of bestEvent and another event $e$. Then for every iteration of the while loop, we delete the bestEvent in constant time. Finally, the ending nested for loop executes $(n-1)$ per iteration. Then we add bestEvent at constant time. In total, we have: $$n\big(n+1+(n-1)+1\big) = O(n^2)$$
 \subsubsection{Correctness}
-Briefly sketch a proof that the algorithm is correct. You need not
-give a formal proof, but you should include all key insights in the
-proof.
+\textit{Briefly sketch a proof that the algorithm is correct. You need not give a formal proof, but you should include all key insights in the
+proof.}
+
+\textbf{Correctness:} Let us define a correct solution returned by the algorithm as a set $R \subset E$. For $R=\{r_1, r_2, \ldots, r_k\}$, we have that $v_1 > v_2 > \ldots > v_k$. And to prevent conflicted showtimes of events we have $ \forall r_i, r_j \in R, \text{if } s_i < s_j, \text{then } f_i < s_j$; or less formally, if an event in our schedule $R$ begins before the next event, then it will also end before the start of our next event.
+\begin{proof}
+We will show that the Naive(E) algorithm returns a correct solution but not necessarily the optimal solution. If we can show that (1) the bestEvent (i.e. $e_i\in E$ such that $v_i$ is a max) is removed from $E$ and added to our result $R$, (2) all conflicting events to bestEvent are removed from $E$, and (3) the algorithm repeats steps (1) and (2) for all remaing events in $E$, then we have shown Naive(E) returns a correct solution. 
+	\begin{enumerate}
+		\item The bestEvent $e_\text{best}$ is assigned as the first element of $E$, then the value of the bestEvent is compared to the value of another element, $e_\text{other}$ . If $v_\text{other} > v_\text{best}$ then we assign the bestEvent $e_\text{best} = e_\text{other}$. Hence, $v_\text{best}$ is the maximum audience value in $E$.
+		
+		After the execution of the first for loop, we remove the bestEvent from $E$ and regardless of the execution of the second for loop this bestEvent is added to $R$.
+		
+		\item In order to handle the conflicts, the second for loop removes events that satisfy the following condition: for all $ e_i \in E - \{e_\text{best}\}$ if an event $e_i$ has a start time before or during the bestEvent (i.e. $s_i < f_\text{best}$), and the finish time of $e_i$ is during or after the bestEvent (i.e. $f_i > s_\text{best}$), then the event $e_i$ interrupts the bestEvent. To see why, let us break the start time of $e_i$ into two cases.
+		
+			\textbf{Case 1:} event $e_i$ starts before the bestEvent. If $e_i$ ends after the start of the bestEvent (i.e. the second condition $f_i > s_\text{best}$), then we have an overlap.
+		
+			\textbf{Case 2}: event $e_i$ starts during the bestEvent. By definition, we have an overlap.
+		
+		\item After steps (1) and (2) we are now left with the subset $E' \subset E$, such that $E'$ does not contain the bestEvent (1) and any conflicting events (2). According to the while loop, if $E'$ is non-empty, then the algorithm will repeat steps (1) and (2) for this new $E'$.
+	\end{enumerate}
+\end{proof}
 \subsection{Reduction on Simplified Problem}
 
 To make the Olympic Broadcasting problem simpler, we completely remove
@@ -262,6 +295,18 @@ Give a correct reduction from this simplified Olympic Broadcasting
 problem to the sorting problem (where you provide both a list of items
 and a function to compare two items). Your reduction should take $O(n
 \lg n)$ time.
+
+\textbf{Reduction: } We will reduce the Olympic Broadcasting problem to a Heapifying Array problem. In order to do this we will recycle the set of all events $E$ and pass it as an array to Heapify(E). This will return our desired schedule of events as $H$. This will take $O(n \lg n)$. For our comparaison function, we want to know if we can add an event $e_j$ if we have already added event $e_i$. The pseudocode is given below.
+
+\begin{verbatim}
+	canAdd(e_i, e_j):
+	  if |value(e_i) - value(e_j)| > 10
+	    return true
+	  else
+	    return false	
+\end{verbatim} 
+
+\textbf{Translation to Olympic Broadcasting: } Now that we have our resulting $H$, for all events $e \in H$ and their respective values we have $v_1 > v_2 > \dotsm> v_k$ where $k =|H|$. This satisfies the first half of our definition of correctness from 1.1.3. 
 
 \textbf{NOTE:} You will likely find that (a) you can solve this with a single
 call to the sorting problem's solution algorithm and (b) producing the
