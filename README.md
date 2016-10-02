@@ -4,15 +4,10 @@
 nano <filename>
 
 #### Git commands:
-<li>git pull //update local repo </li>
-
-?? change file
-
-git add <filename>
+<li>`git pull` //update local repo</li> 
+`git add <filename>`
 or
-git add *
-
-git commit -m "<enter messager here>"
-git push origin master
-
-git log or git status \\ to check if successfully added files
+`git add *`
+`git commit -m "<enter message here>"`
+`git push origin master`
+`git log or git statu`s \\ to check if successfully added files
