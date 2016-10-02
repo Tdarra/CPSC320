@@ -1,7 +1,7 @@
 ### Taj and Steph's HW
 
 #### Editing docs:
-nano <filename>
+`nano <filename>`
 
 #### Git commands:
 <li>`git pull`update local repo</li> 
