@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  1 OCT 2016 16:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  1 OCT 2016 19:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1278,26 +1278,26 @@ ar re-duc-tions that take $\OML/cmm/m/it/10.95 O\OT1/cmr/m/n/10.95 (\OML/cmm/m/
 it/10.95 n\OT1/cmr/m/n/10.95 )$ time---not
  []
 
-[5]
-Overfull \hbox (10.52962pt too wide) in paragraph at lines 394--398
+[5] [6]
+Overfull \hbox (10.52962pt too wide) in paragraph at lines 418--422
 \OT1/cmr/m/n/10.95 de-fined above, and the anal-o-gous in-sta-bil-ity with the 
 roles of men and women swapped). 
  []
 
-[6]
-Overfull \hbox (0.59448pt too wide) in paragraph at lines 410--414
+[7]
+Overfull \hbox (0.59448pt too wide) in paragraph at lines 434--438
 \OT1/cmr/m/n/10.95 (and can-not be as-signed one). Ev-ery other ac-count must h
 ave a sin-gle, des-ig-nated ``spon-sor''
  []
 
-[7]
-Overfull \hbox (0.75826pt too wide) in paragraph at lines 461--469
+[8]
+Overfull \hbox (0.75826pt too wide) in paragraph at lines 485--493
 []\OT1/cmr/m/n/10.95 Briefly de-scribe an al-go-rithm to com-pute the cen-tral-
 ity of a user given a graph $\OML/cmm/m/it/10.95 G$ \OT1/cmr/m/n/10.95 rep-re-s
 ented
  []
 
-[8] [9]
+[9] [10]
 
 Package caption Warning: Unused \captionsetup[figure] on input line 113.
 See the caption package documentation for explanation.
@@ -1308,19 +1308,19 @@ See the caption package documentation for explanation.
 
 
 AED: lastpage setting LastPage
-[10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 551.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 551.
+[11]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 582.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 582.
  (./AssignmentC320_2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 551.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 551.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 582.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 582.
 Package rerunfilecheck Info: File `AssignmentC320_2.out' has not changed.
 (rerunfilecheck)             Checksum: A454258A88E5FD091A0223DAE2387000;1221.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 551.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 582.
  ) 
 Here is how much of TeX's memory you used:
- 31064 strings out of 493089
- 632969 string characters out of 6134842
+ 31071 strings out of 493089
+ 633018 string characters out of 6134842
  694744 words of memory out of 5000000
  34028 multiletter control sequences out of 15000+600000
  15709 words of font info for 60 fonts, out of 8000000 for 9000
@@ -1343,10 +1343,10 @@ ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
 /2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/
 2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on AssignmentC320_2.pdf (10 pages, 231625 bytes).
+Output written on AssignmentC320_2.pdf (11 pages, 236235 bytes).
 PDF statistics:
- 228 PDF objects out of 1000 (max. 8388607)
- 197 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
+ 241 PDF objects out of 1000 (max. 8388607)
+ 208 compressed objects within 3 object streams
+ 47 named destinations out of 1000 (max. 500000)
  165 words of extra memory for PDF output out of 10000 (max. 10000000)
 
