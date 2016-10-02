@@ -5,9 +5,10 @@ nano <filename>
 
 #### Git commands:
 <li>`git pull` //update local repo</li> 
-`git add <filename>`
+
+<li>`git add <filename>`</li>
 or
-`git add *`
-`git commit -m "<enter message here>"`
-`git push origin master`
-`git log or git statu`s \\ to check if successfully added files
+<li>`git add *`</li>
+<li>`git commit -m "<enter message here>"`</li>
+<li>`git push origin master`</li>
+<li>`git log or git statu`s \\ to check if successfully added files</li>
