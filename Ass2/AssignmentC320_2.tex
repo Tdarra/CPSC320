@@ -374,10 +374,16 @@ With one small change, we can apply this algorithm and ensure that the
 (not necessarily perfect) matching produced never marries a person to
 someone they left off of their preference list.
 \begin{enumerate}
-\item Make the small change necessary \textbf{to the algorithm above}.
-\item Briefly sketch the key elements of a proof that the algorithm
-   terminates.
-\item We need a new definition of instability now that some people may
+	\item Make the small change necessary \textbf{to the algorithm above}.
+
+	\qquad Line 6: if ($w$ is unengaged \& $m$ in $w$'s preference list) then
+
+	\item Briefly sketch the key elements of a proof that the algorithm terminates.
+	
+	In the worst case, the algorithm will terminate in $n^2$ iterations, i.e. men have complete preference lists. Let $S(k)$ be the set of pairs $(m, w)$ such that $m$ has proposed to $w$ on iteration $k$ of the Gale-Shapley algorithm. Then we can see that every new iteration increases the number of pairs (or in mathematical notation: $\forall k, |S(k+1)| > S(k)$). However, since in the worst case we have $n^2$ possible pairs of men and women we know that there can be at most $n^2$ iterations of the while loop, hence the algorithm must terminate.
+	
+	
+	\item We need a new definition of instability now that some people may
    end up unmarried. Here is one new type of instability that we call
    an \emph{elopement instability}: m$_i$ and w$_j$ are both unmarried but list
    each other on their preference lists (in which case they have
@@ -386,7 +392,7 @@ someone they left off of their preference list.
    Describe another new type of instability involving an unmarried
    woman. (Note: an analogous instability exists involving an
    unmarried man.)
-\item Briefly sketch the key elements of a proof that your modified G-S
+	\item Briefly sketch the key elements of a proof that your modified G-S
    algorithm cannot generate an elopement instability.
 \end{enumerate}
 \subsection{Even More Exhausted}
