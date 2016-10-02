@@ -522,6 +522,9 @@ TopC(A, c):
     deleteMax(h)
   return best
 \end{verbatim}
+
+\textbf{Answer: } The asymptotic upper-bound seems to be $O(cn)$. Given that \texttt{buildMaxHeap} operates at $O(n)$ we proceed to the \texttt{for} loop that executes $c$ times. In this loop, we call \texttt{deleteMax} which removes the maximum element in the heap and calls the necessary percolations to rebalance the heap. This should take $O(n)$. Hence, we have $n+1+c(1+n)+1 = O(cn)$.
+
 \subsection{Algorithm 2}
 
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
@@ -541,6 +544,8 @@ TopC(A, c):
     A[i] = max
   return A[1..c]
 \end{verbatim}
+
+\textbf{Answer: } Algorithm 2 executes in $O(cn)$ time. The outer \texttt{for} loop  performs $c$ operations. The nested \texttt{for} loop performs  $n$ operations. Thus, by the end of algorithm we have $O(cn + c) = O(cn)$
 \subsection{Algorithm 3}
 
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
@@ -552,6 +557,8 @@ TopC(A, c):
   sort A using an efficient, comparison-based sorting algorithm
   return A[1..c]
 \end{verbatim}
+
+\textbf{Answer: } Using a QuickSort as our comparison-based sorting algorithm, it takes $O(n \lg n)$ to sort \texttt{A}. Then to \texttt{return A[1...c]} it takes $O(c)$. The upper bound is then $O(c+n \lg n)$.  
 \subsection{Algorithm 4}
 
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
@@ -571,5 +578,6 @@ TopC(A, c):
   return Elements(h)
 \end{verbatim}
 
+\textbf{Answer: } Algorithm 4 operates in ....stay tuned
 
 \end{document} 
