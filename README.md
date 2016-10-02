@@ -1,10 +1,10 @@
-Taj and Steph's HW
+### Taj and Steph's HW
 
-Editing docs:
+#### Editing docs:
 nano <filename>
 
-Git commands:
-git pull //update local repo
+#### Git commands:
+<li>git pull //update local repo </li>
 
 ?? change file
 
