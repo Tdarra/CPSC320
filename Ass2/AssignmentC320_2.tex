@@ -392,8 +392,26 @@ someone they left off of their preference list.
    Describe another new type of instability involving an unmarried
    woman. (Note: an analogous instability exists involving an
    unmarried man.)
-	\item Briefly sketch the key elements of a proof that your modified G-S
-   algorithm cannot generate an elopement instability.
+   
+   \textbf{The mistress instability: } We can define a new instability with the following conditions:
+   		\begin{enumerate}
+   			\item $w_j$ is unmarried, $m_i$ is married
+   			\item $w_j$ prefers $m_i$ to being unmarried 
+   			\item $m_i$ prefers $w_j$ to current partner
+   
+   \end{enumerate}
+   \textbf{The poolboy instability: }\textit{(to be referenced in 2.1)} An instability analogous to the above has the following conditions: 
+   \begin{enumerate}
+   			\item $w_j$ is married, $m_i$ is unmarried
+   			\item $w_j$ prefers $m_i$ to current partner
+   			\item $m_i$ prefers $w_j$ to being unmarried
+   
+   \end{enumerate}
+	\item Briefly sketch the key elements of a proof that your modified G-S algorithm cannot generate an elopement instability.
+	
+	\begin{proof}
+		In order to show that the \textit{elopement instability} is not a feasible result of the modified G-S algorithm, we will show that the algorithm terminates with a man left married or unmarried  with an empty preference list. The precondition of the \textbf{while} loop outlines that an unengaged man must have a preference list, otherwise we terminate the procedure. This means that we cannot have an unengaged man and unengaged woman that prefer each other. This is because the while loop ensures that every man gets engaged or is left with an empty preference list. In the case of the latter, it is not possible that an unmarried man prefers any woman.
+	\end{proof}
 \end{enumerate}
 \subsection{Even More Exhausted}
 
