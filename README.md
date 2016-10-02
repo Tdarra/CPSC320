@@ -1,18 +1,14 @@
 ### Taj and Steph's HW
 
 #### Editing docs:
-nano <filename>
+`nano <filename>`
 
 #### Git commands:
-<li>git pull //update local repo </li>
+<li>`git pull`update local repo</li> 
 
-?? change file
-
-git add <filename>
+<li>`git add <filename>`
 or
-git add *
-
-git commit -m "<enter messager here>"
-git push origin master
-
-git log or git status \\ to check if successfully added files
+`git add *`</li>
+<li>`git commit -m "<enter message here>"`</li>
+<li>`git push origin master`</li>
+<li>`git log or git status` to check if successfully added files</li>
