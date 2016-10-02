@@ -136,31 +136,22 @@
         \usetikzlibrary{patterns}			%Specify colours of stuff (e.g. vertices): 
         										%	-> set style: \tikzset{VertexStyle/.append style = {minimum size = 8pt, inner sep = 0pt}} 
 											%	-> change individual vertices: \AddVertexColor{white}{1,2} 
-
-
 %Bibliography
 \usepackage[numbers,sort&compress]{natbib}   %for multiple references: sorts  (i.e. [1,2] NOT [2, 1] )
                                            				  %                                     compresses (i.e. [1-3] )
 \usepackage[nottoc]{tocbibind}                            %add bibliography to table of contents
-
-
 %Miscellaneous
 \usepackage{dirtytalk}    %quotations: use \say  
 \usepackage{wasysym} 	 % \smiley{} \frownie{} \blacksmiley{}
 \usepackage{hyperref}
 \usepackage{algpseudocode}
-
-
 %================================== Header & Footer =======================================
 \usepackage{fancyhdr}
 \usepackage{lastpage}      %ensures you can reference LastPage (i.e. Page 2 of 10)
-
 \renewcommand{\headrulewidth}{0.4pt}		%Decorative Header line: thickness={0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}		%Decorative Footer line: thickness={0.4pt}
-
 \setlength{\headheight}{13.6pt} 		%space b/w top of page & header
 \setlength{\headsep}{0.3in}		%space b/w page header and body
-
 %Make Header & Footer    
 \pagestyle{fancy}
     \lhead{S. Knill and T. Darra} 		% controls the left corner of the header
@@ -170,34 +161,32 @@
     \cfoot{Page~\thepage\ of \pageref{LastPage}} 				% controls the center of the footer
     												%Page~\thepage\  if just want Page x
     \rfoot{}			 		% controls the right corner of the footer
-
-
 % ================================== Document =============================================
 \begin{document}
-
-% Title Page
-\title{CPSC 320 --- Assignment 2 \\
-\line(1,0){360} \\              %(slope x, y){length of line}
-}
+% Implementation of a Database Management System for The Dempster Carte
+\title{CPSC 320 -- Assignment 2
+\line(1,0){360} \\               %(slope x, y){length of line}
+\vspace{0.5cm}
+\large
+The University of British Columbia \\
+Due: October 6, 2016
+\vspace{1cm}}
 \author{
-Stephanie Knill (54882113) \\
-Taj Darra (43350115) \\
-Due: October 6, 2016}
-
-\date{}                   % Activate:  display a given date (e.g. {August 4} ) or no date (empty {} )
+Knill, Stephanie\\
+54882113
+\and
+Darra, Taj \\
+43350115
+}
+\date{}                    % Activate:  display a given date (e.g. {August 4} ) or no date (empty {} )
                                     %No activate: display current date
 \maketitle
-
-%\thispagestyle{empty}                   %Remove header from this (first) page. Change empty -> plain to keep numbering
-%								-> Doesn't matter in this case (b/c title page)
-%\cleardoublepage
-
-
-% ================= Questions ================
-
+\thispagestyle{empty}    %do not display page number on this page
+\medskip 
 \section*{Collaboration Policy}
 \emph{All group members have read and followed the guidelines for academic conduct in CPSC 320. As part of those rules, when collaborating with anyone outside my group, (1) I and my collaborators took no record but names away, and (2) after a suitable break, my group created the assignment I am submitting without help from anyone other than the course staff.}
-
+% ================= Questions ================
+\cleardoublepage
 \section{Olympic Scheduling}
 You are in charge of a live-streaming YouTube channel for the Olympics
 that promises never to interrupt an event. (So, once you start playing
@@ -207,20 +196,16 @@ includes its: \textbf{start time, finish time (which must be after its start tim
 obviously \textbf{will} include the single highest-valued event in the
 Olympics---presumably the hockey gold medal game---no matter what else
 it blocks you from showing.)
-
 (Times when you're not broadcasting events will be filled with ``human
 interest stories'' that have zero value; so, they're irrelevant.)
-
 \textbf{ASSUME: all event values are distinct and all event times are distinct.} I.e., for any two values $v_i$ and $v_j$ with $i \neq j$,
 $v_i \neq v_j$. The same holds for start and end times (e.g., for any
 two start times $s_i$ and $s_j$ with $i \neq j$, $s_i \neq
 s_j$). Further, for any two start and finish times $s_i$ and $f_j$,
 whether $i = j$ or not, $s_i \neq f_j$.
 \subsection{Na\"ive Algorithm}
-
 Consider the following algorithm. Assume that deleting an event from a
 list of events takes constant time.
-
 \begin{verbatim}
 Naive(E):
   result = new empty list of events
@@ -237,19 +222,14 @@ Naive(E):
   return result
 \end{verbatim}
 \subsubsection{Finiteness}
-
 Briefly sketch a proof that the \texttt{while} loop in the algorithm above
 terminates. You need not give a formal proof, but you should include
 all key insights in the proof.
-
 \textbf{Representing the problem:} Let $E$ denote the set of all events to be streamed $E=\left\{e_1, \dotsm, e_n\right\}$ where $n=|E|.$ For every event $e \in E$, let $e$ comprise an ordered triple $e_i = (v_i, s_i, f_i)$ where $v,s$ and $f$ denote the audience value, start time, and finish time accordingly.
-
 \begin{proof}
 Let $n$ be the cardinality of $E$ (i.e. $n=|E|$).
-
 \textbf{Base Case:} if $n = 0$, then the while loop is never intiated
 Otherwise if $n=1$ then the event $e$ where $e \in E$ is the bestEvent as assigned and is removed after the execution of the first for loop. 
-
 \textbf{Inductive Step:} Assume true for $n=k$ events, then for $n=k+1$ events we have two cases as such:
 \begin{itemize}
 	\item In the first case, we delete the bestEvent and no conflicting events leaving us with $n=k+1-1=k$. By the inductive assumption the algorithm holds true.
@@ -257,14 +237,11 @@ Otherwise if $n=1$ then the event $e$ where $e \in E$ is the bestEvent as assign
 \end{itemize} 
 \end{proof}
 \subsubsection{Efficiency}
-
 \textit{Give and briefly justify a good asymptotic bound on the runtime of the algorithm.}
-
 Assuming all elementary operation execute in constant time, the worst case executions are $O(n^2)$ where the worst case execution is defined as when we only delete the assigned bestEvent and there are no conflicts.  Within the outer while loop, the first for loop executes $n$ times for comparing the values of bestEvent and another event $e$. Then for every iteration of the while loop, we delete the bestEvent in constant time. Finally, the ending nested for loop executes $(n-1)$ per iteration. Then we add bestEvent at constant time. In total, we have: $$n\big(n+1+(n-1)+1\big) = O(n^2)$$
 \subsubsection{Correctness}
 \textit{Briefly sketch a proof that the algorithm is correct. You need not give a formal proof, but you should include all key insights in the
 proof.}
-
 \textbf{Correctness:} Let us define a correct solution returned by the algorithm as a set $R \subset E$. For $R=\{r_1, r_2, \ldots, r_k\}$, we have that $v_1 > v_2 > \ldots > v_k$. And to prevent conflicted showtimes of events we have $ \forall r_i, r_j \in R, \text{if } s_i < s_j, \text{then } f_i < s_j$; or less formally, if an event in our schedule $R$ begins before the next event, then it will also end before the start of our next event.
 \begin{proof}
 We will show that the Naive(E) algorithm returns a correct solution but not necessarily the optimal solution. If we can show that (1) the bestEvent (i.e. $e_i\in E$ such that $v_i$ is a max) is removed from $E$ and added to our result $R$, (2) all conflicting events to bestEvent are removed from $E$, and (3) the algorithm repeats steps (1) and (2) for all remaing events in $E$, then we have shown Naive(E) returns a correct solution. 
@@ -283,21 +260,17 @@ We will show that the Naive(E) algorithm returns a correct solution but not nece
 	\end{enumerate}
 \end{proof}
 \subsection{Reduction on Simplified Problem}
-
 To make the Olympic Broadcasting problem simpler, we completely remove
 start time and finish times from the problem. So, now events only have
 values (not times), and a ``schedule'' is just a set of selected
 events. To make it slightly harder again, you are not allowed to
 select two events $i$ and $j$ if their values are within 10 units of
 each other: $|v_i - v_j| \leq 10$.
-
 Give a correct reduction from this simplified Olympic Broadcasting
 problem to the sorting problem (where you provide both a list of items
 and a function to compare two items). Your reduction should take $O(n
 \lg n)$ time.
-
 \textbf{Reduction: } We will reduce the Olympic Broadcasting problem to a Heapifying Array problem. In order to do this we will recycle the set of all events $E$ and pass it as an array to Heapify(E). This will return our desired schedule of events as $H$. This will take $O(n \lg n)$. For our comparaison function, we want to know if we can add an event $e_j$ if we have already added event $e_i$. The pseudocode is given below.
-
 \begin{verbatim}
 	canAdd(e_i, e_j):
 	  if |value(e_i) - value(e_j)| > 10
@@ -305,16 +278,13 @@ and a function to compare two items). Your reduction should take $O(n
 	  else
 	    return false	
 \end{verbatim} 
-
 \textbf{Translation to Olympic Broadcasting: } Now that we have our resulting $H$, for all events $e \in H$ and their respective values we have $v_1 > v_2 > \dotsm> v_k$ where $k =|H|$. This satisfies the first half of our definition of correctness from 1.1.3. 
-
 \textbf{NOTE:} You will likely find that (a) you can solve this with a single
 call to the sorting problem's solution algorithm and (b) producing the
 sorting instance is the easier part and transforming the solution to
 sorting into a solution to this simplified Olympic Broadcasting
 problem is the harder part. Don't forget to do both!
 \subsection{Olympic Reduction, BONUS ONLY}
-
 This was significantly harder than we intended it to be! So, we
 removed it from the quiz/assignment. It's a bonus problem worth two
 CPSC 320 bonus points for extremely clear, correct, and efficient
@@ -322,36 +292,28 @@ responses. (Extremely clear reductions that take $O(n)$ time---not
 counting an $O(1)$ number of calls to a sorting algorithm---may
 receive 3 bonus points, but we don't know if such reductions are
 possible.)
-
 Give a correct and efficient reduction from the Olympic broadcasting
 problem to the sorting problem (where you provide both a list of items
 and a function to compare two items). Your reduction---combined with
 an $O(n \lg n)$ sorting algorithm---should be asymptotically more
 efficient than the na\"ive algorithm above.
 \subsubsection{Correctness}
-
 Briefly sketch a proof that your algorithm is correct. You need not
 give a formal proof, but you should include all key insights in the
 proof.
 \subsubsection{Efficiency}
-
 Give and briefly justify a good asymptotic bound on the runtime
 of \textbf{just} your reduction, \textbf{not} including the call to the sorting
 algorithm. So, for the purposes of this asymptotic bound, you can
 imagine that we somehow solve sorting in constant time. (Note: it's
 possible to give a reduction that takes $O(n)$ time.)
-
-
-
-
+\cleardoublepage
 \section{Exhausted of Marriage}
-
 We modify SMP with the very reasonable change that not every woman
 need list every man in her preferences. She prefers to be unmarried to
 marrying unlisted men. Note that she clearly prefers any man on her
 preference list to any man not on her preference list. Men can
 similarly truncate their lists of women.
-
 Here is the Gale-Shapley algorithm:
   \begin{algorithmic}[1]
   \Procedure{Stable-Marriage}{$M$, $W$}
@@ -375,9 +337,7 @@ With one small change, we can apply this algorithm and ensure that the
 someone they left off of their preference list.
 \begin{enumerate}
 	\item Make the small change necessary \textbf{to the algorithm above}.
-
 	\qquad Line 6: if ($w$ is unengaged \& $m$ in $w$'s preference list) then
-
 	\item Briefly sketch the key elements of a proof that the algorithm terminates.
 	
 	In the worst case, the algorithm will terminate in $n^2$ iterations, i.e. men have complete preference lists. Let $S(k)$ be the set of pairs $(m, w)$ such that $m$ has proposed to $w$ on iteration $k$ of the Gale-Shapley algorithm. Then we can see that every new iteration increases the number of pairs (or in mathematical notation: $\forall k, |S(k+1)| > S(k)$). However, since in the worst case we have $n^2$ possible pairs of men and women we know that there can be at most $n^2$ iterations of the while loop, hence the algorithm must terminate.
@@ -414,90 +374,160 @@ someone they left off of their preference list.
 	\end{proof}
 \end{enumerate}
 \subsection{Even More Exhausted}
-
 Briefly sketch the key elements of a proof that your modified G-S
 algorithm cannot generate any of the other three types of instability
 (the classic SMP instability, the instability you defined above, and
 the analogous instability with the roles of men and women swapped).
+\begin{proof}
+Because Taj is a poopie poop pooop.
+\end{proof}
+\cleardoublepage
 \section{Footblog}
-
 The massive social network Footblog tracks relationships based on
 whether two people have ``enemied'' each other. (``Enemyship'' is a mutual
 agreement, meaning that a person is not allowed to ``enemy'' another
 person unless the other person agrees to ``enemy'' them back. No one can
 ``enemy'' themselves.)
 \subsection{Isolationism}
-
 We investigate whether Footblog's network is a single connected
 component.
-
 Footblog's founder created the first Footblog account, and that
-account has no ``sponsor'' (and cannot be assigned one). Every other
-account must have a single, designated ``sponsor'' who they have
-``enemied''. If $a$ sponsors $b$, we call $b$ the \emph{sponsee} of $a$.
-
-There are then four major actions to consider on Footblog, some of
-which involve others as steps:
+account has no ``sponsor'' (and cannot be assigned one). Every other account must have a single, designated ``sponsor'' who they have ``enemied''. If $a$ sponsors $b$, we call $b$ the\emph{sponsee} of $a$.
+There are then four major actions to consider on Footblog, some of which involve others as steps:
 \begin{description}
-\item[\emph{Joining}] When a new Footblog member joins, they must do so by
+	\item[\emph{Joining}] When a new Footblog member joins, they must do so by
                choosing as sponsor (and ``enemying'') someone already in
                the network who agrees to be their sponsor (and their
                enemy). After members join, they're free to ``enemy''
                and ``unenemy'' anyone except their sponsor and their
                sponsees.
-\item[\emph{Enemying}] Already described above. Remember that when one person
+	\item[\emph{Enemying}] Already described above. Remember that when one person
                 ``enemies'' another, the other must agree to ``enemy''
                 that person back.
-\item[\emph{Un-Enemying}] Unlike making an ``enemy'' link, one person alone can
+	\item[\emph{Un-Enemying}] Unlike making an ``enemy'' link, one person alone can
                    ``unenemy'' another person, in which case neither
                    ``enemies'' the other any more.
-\item[\emph{Change Sponsor}] If a person wishes to change their sponsor, they
+	\item[\emph{Change Sponsor}] If a person wishes to change their sponsor, they
      must ``unenemy'' their sponsor and simultaneously ``enemy'' a new
      sponsor. The new sponsor must agree to act as sponsor and enemy
      and \textbf{must be a new enemy} (i.e., must not already be the person's
      enemy). Note that while a sponsee can choose to change their
      sponsor, a sponsor cannot choose to change their sponsee.
 \end{description}
-
-You may assume these actions never happen in parallel, i.e., a defined
-sequence occurs of the operations: joining, enemying, un-enemying, and
-changing sponsors.
+You may assume these actions never happen in parallel, i.e., a defined sequence occurs of the operations: joining, enemying, un-enemying, and changing sponsors.
 \begin{enumerate}
-\item Based on these rules, sketch a brief proof that when a person
-   changes their sponsor, their new sponsor cannot also be one of
-   their sponsees.
-\item Based on these rules, either \textbf{sketch the key points in a proof that    Footblog's enemy graph forms a single connected component} or \textbf{give    a small sequence of actions that creates multiple components}.
+	\item Based on these rules, sketch a brief proof that when a person changes their sponsor, their new sponsor cannot also be one of their sponsees.
+	
+	\begin{proof}
+		Assume to the contrary that for a person $p$ their new sponsor $s$ is also their sponsee. Since $s$ was originally a sponsee, then $p$ and $s$ were already enemies. However this contradicts the definition of ``Change Sponsor'', as the new sponsor must be a new enemy.
+	\end{proof}		
+	
+	\item Based on these rules, either \textbf{sketch the key points in a proof that    Footblog's enemy graph forms a single connected component} or \textbf{give a small sequence of actions that creates multiple components}.
    
    Circle \textbf{one}: \hfill \textbf{SINGLE ONLY} \hfill \textbf{MAY BE MULTIPLE} \hfill
-
    \textbf{Provide your proof sketch or example:}
+   
+   Let the creator be denoted by the vertex $C$. Then a sequence of steps that will generate multiple components is
+   \begin{verbatim}
+     join(A, C)
+     join(B, A)
+     join(D, B)
+     changeSponsor(A, D)
+   \end{verbatim}
+   where join($v_i$, $v_j$) adds the vertex $v_i$ to the network with $v_j$ as its sponsor and changeSponsor($v_i$, $v_j$) changes the sponsor of vertex $v_i$ to be $v_j$.
+   
+   
+   To help visualize these steps, let us represent it as a graph $G=(V,E)$ such that an edge $(v_i, v_j)$ is defined if $v_i$ and $v_j$ are enemies. For ease of clarity, we will show a sponsor-sponsee relationship by a directed arrow, where the arrow head points to the sponsor. The graph $G$ prior to the call to changeSponsor is shown in Figure \ref{Graph1} and the graph $G'$ after the call to changeSponsor in Figure \ref{Graph2}.
+   
+   \begin{figure}[h]           
+   	\centering
+    \begin{subfigure}[b]{0.45\columnwidth}
+    		\centering
+        \begin{tikzpicture}[scale=0.75,transform shape]
+              \tikzstyle{LabelStyle}=[fill=white,sloped]
+              \Vertex[x=0,y=0]{B}
+              \Vertex[x=0,y=3]{A}
+              \Vertex[x=3,y=0]{D}
+              \Vertex[x=3,y=3]{C}
+            
+              %Edges bend left
+              \tikzstyle{EdgeStyle}=[bend left]		%\Edge[label=$120$](A)(B)  %if want to label the edge
+                  			
+              %Edges bend right
+              \tikzstyle{EdgeStyle}=[bend right]
+            
+              %Edges arrow
+              \tikzstyle{EdgeStyle}=[->]
+                  \Edge(A)(C)
+                  \Edge(B)(A)
+                  \Edge(D)(B) 
+         \end{tikzpicture}
+         \caption{Graph $G$}
+		 \label{Graph1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\columnwidth}
+    		\centering
+        \begin{tikzpicture}[scale=0.75,transform shape]
+              \tikzstyle{LabelStyle}=[fill=white,sloped]
+              \Vertex[x=0,y=0]{B}
+              \Vertex[x=0,y=3]{A}
+              \Vertex[x=3,y=0]{D}
+              \Vertex[x=3,y=3]{C}
+            
+              %Edges bend left
+              \tikzstyle{EdgeStyle}=[bend left]		%\Edge[label=$120$](A)(B)  %if want to label the edge
+                  			
+              %Edges bend right
+              \tikzstyle{EdgeStyle}=[bend right]
+        
+              %Edges arrow
+              \tikzstyle{EdgeStyle}=[->]
+                  \Edge(A)(D)
+                  \Edge(B)(A)
+                  \Edge(D)(B) 
+         \end{tikzpicture}
+         \caption{Graph $G'$}
+		 \label{Graph2}
+    \end{subfigure}
+    \caption{A simply connected Footblog graph $G$ and the same graph $G'$ after changeSponsor is called.}
+    \label{polynomials}
+	\end{figure}
+   
 \end{enumerate}
 \subsection{Centrality}
-
-Footblog has defined a notion of ``centrality'' for its users: a user's
-``centrality'' is the minimum number of people they'd need to go through
-to get a message to the person farthest from them on the network,
-following ``enemy'' links. (The ``farthest'' person is exactly the one to
-whom there is the longest minimum-length path of enemies.)
-
+Footblog has defined a notion of ``centrality'' for its users: a user's ``centrality'' is the minimum number of people they'd need to go through to get a message to the person farthest from them on the network, following ``enemy'' links. (The ``farthest'' person is exactly the one to whom there is the longest minimum-length path of enemies.)
 For this problem, \textbf{assume that the Footblog network does indeed form a single connected component.}
-
-Briefly describe an algorithm to compute the centrality of a user
-given a graph $G$ represented as a number of users $n > 0$ (where the
-users themselves are vertices named $\{v_1, v_2, \ldots, v_n\}$, a
-vertex number $i$ (where $1 \leq i \leq n$) of the user whose
-centrality we wish to compute, and an adjacency list $A$ of edges
-(i.e., an array of linked lists, where the entries in the list $A[j]$
-are the vertex numbers of the users $j$ has ``enemied''). You may use
-any common data structures you need. \textbf{Your algorithm must run in linear (i.e., $O(n + m)$ for $n$ nodes and $m$ edges) time.}
-
-
+Briefly describe an algorithm to compute the centrality of a userngiven a graph $G$ represented as a number of users $n > 0$ (where the users themselves are vertices named $\{v_1, v_2, \ldots, v_n\}$, a vertex number $i$ (where $1 \leq i \leq n$) of the user whose centrality we wish to compute, and an adjacency list $A$ of edges (i.e., an array of linked lists, where the entries in the list $A[j]$ are the vertex numbers of the users $j$ has ``enemied''). You may use any common data structures you need. \textbf{Your algorithm must run in linear (i.e., $O(n + m)$ for $n$ nodes and $m$ edges) time.}
 \begin{verbatim}
 Centrality(n, i, A):
-  // Fill in your algorithm here!
+  // Initialize distances
+  V := set of all vertices in graph G
+  for each vertx v in V - {v_i}
+    dist[v] := infinity
+  dist[i] := 0
+  
+  // Modified Dijkstra algorithm: compute shortest distance between
+  // v_i and all other vertices
+  while V is not empty:
+    u: node in V with smallest dist[]
+    remove u from V
+    
+    for each v in A[u]		   // all of u's neighbours
+      temp := dist[u] + 1
+      if temp < dist[v]
+        dist[v] := temp
+  
+  // Find maximium of the shortest distances
+  max_dist = 0
+  for each vertex v in V:
+    if dist[v] > max_dist
+      max_dist := dist[v]
+    
+  return max_dist
 \end{verbatim}
+\textbf{Runtime Analysis:} since the initialization of distances is done over $n$ vertices and the modified Dijkstra algorithm runs over $m$ edges, we have $O(n+m)$.
+\cleardoublepage
 \section{Heaps of Fun Might Be OK}
-
 You're managing a major online tournament of the hot new game Flappy
 Squirrel. There are a huge number of users, each with a
 competitiveness rating (a floating point number). You need an
@@ -506,13 +536,11 @@ of these competitiveness ratings (an array $A$ of length
 $n$)---returns a list of the $c$ highest ratings. You're guaranteed
 that $c \leq n$. (Note: we use 1-based indexing on arrays.)
 \subsection{Algorithm 1}
-
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
 bound) on the runtime of the following algorithm to solve this
 problem. (\textbf{Note:} the \texttt{buildMaxHeap} operation returns a max-heap
 built from the elements of a given array of length $n$ in $O(n)$
 time.)
-
 \begin{verbatim}
 TopC(A, c):
   best <- empty list
@@ -522,16 +550,12 @@ TopC(A, c):
     deleteMax(h)
   return best
 \end{verbatim}
-
-\textbf{Answer: }The asymptotic upper-bound seems to be $O(cn)$. Given that \texttt{buildMaxHeap} operates at $O(n)$ we proceed to the \texttt{for} loop that executes $c$ times. In this loop, we call \texttt{deleteMax} which removes the maximum element in the heap and calls the necessary percolations to rebalance the heap. This should take $O(n)$. Hence, we have $n+1+c(1+n)+1 = O(cn)$.
-
+\textbf{Answer: } The asymptotic upper-bound seems to be $O(cn)$. Given that \texttt{buildMaxHeap} operates at $O(n)$ we proceed to the \texttt{for} loop that executes $c$ times. In this loop, we call \texttt{deleteMax} which removes the maximum element in the heap and calls the necessary percolations to rebalance the heap. This should take $O(n)$. Hence, we have $n+1+c(1+n)+1 = O(cn)$.
 \subsection{Algorithm 2}
-
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
 bound) on the runtime of the following algorithm to solve this
 problem. (Note: the notation \texttt{A[1..c]} produces a list of the elements
 \texttt{A[1], A[2], A[3], ..., A[c]} in $O(c)$ time.)
-
 \begin{verbatim}
 TopC(A, c):
   for i = 1 to c:
@@ -544,28 +568,22 @@ TopC(A, c):
     A[i] = max
   return A[1..c]
 \end{verbatim}
-
-\textbf{Answer: }Algorithm 2 executes in $O(cn)$ time. The outer \texttt{for} loop  performs $c$ operations. The nested \texttt{for} loop performs  $n$ operations. Thus, by the end of algorithm we have $O(cn + c) = O(cn)$
+\textbf{Answer: } Algorithm 2 executes in $O(cn)$ time. The outer \texttt{for} loop  performs $c$ operations. The nested \texttt{for} loop performs  $n$ operations. Thus, by the end of algorithm we have $O(cn + c) = O(cn)$
 \subsection{Algorithm 3}
-
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
 bound) on the runtime of the following algorithm to solve this
 problem.
-
 \begin{verbatim}
 TopC(A, c):
   sort A using an efficient, comparison-based sorting algorithm
   return A[1..c]
 \end{verbatim}
-
-\textbf{Answer: }Using a QuickSort as our comparison-based sorting algorithm, it takes $O(n \lg n)$ to sort \texttt{A}. Then to \texttt{return A[1...c]} it takes $O(c)$. The upper bound is then $O(c+n \lg n)$.  
+\textbf{Answer: } Using a QuickSort as our comparison-based sorting algorithm, it takes $O(n \lg n)$ to sort \texttt{A}. Then to \texttt{return A[1...c]} it takes $O(c)$. The upper bound is then $O(c+n \lg n)$.  
 \subsection{Algorithm 4}
-
 Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
 bound) on the runtime of the following algorithm to solve this
 problem. (Note: \texttt{Elements(h)} produces all elements in the heap \texttt{h} in
 constant time, but \texttt{h} can no longer be used after that point.)
-
 \begin{verbatim}
 TopC(A, c):
   h <- empty min-heap
