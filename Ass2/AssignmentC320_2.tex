@@ -175,29 +175,38 @@
 % ================================== Document =============================================
 \begin{document}
 
-% Title Page
-\title{CPSC 320 --- Assignment 2 \\
-\line(1,0){360} \\              %(slope x, y){length of line}
-}
-\author{
-Stephanie Knill (54882113) \\
-Taj Darra (43350115) \\
-Due: October 6, 2016}
+% Implementation of a Database Management System for The Dempster Carte
+\title{CPSC 320 -- Assignment 2
+\line(1,0){360} \\               %(slope x, y){length of line}
+\vspace{0.5cm}
+\large
+The University of British Columbia \\
+Due: October 6, 2016
+\vspace{1cm}}
 
-\date{}                   % Activate:  display a given date (e.g. {August 4} ) or no date (empty {} )
+
+\author{
+Knill, Stephanie\\
+54882113
+\and
+Darra, Taj \\
+43350115
+}
+
+\date{}                    % Activate:  display a given date (e.g. {August 4} ) or no date (empty {} )
                                     %No activate: display current date
 \maketitle
+\thispagestyle{empty}    %do not display page number on this page
 
-%\thispagestyle{empty}                   %Remove header from this (first) page. Change empty -> plain to keep numbering
-%								-> Doesn't matter in this case (b/c title page)
-%\cleardoublepage
+\medskip 
+\section*{Collaboration Policy}
+\emph{All group members have read and followed the guidelines for academic conduct in CPSC 320. As part of those rules, when collaborating with anyone outside my group, (1) I and my collaborators took no record but names away, and (2) after a suitable break, my group created the assignment I am submitting without help from anyone other than the course staff.}
+
 
 
 % ================= Questions ================
 
-\section*{Collaboration Policy}
-\emph{All group members have read and followed the guidelines for academic conduct in CPSC 320. As part of those rules, when collaborating with anyone outside my group, (1) I and my collaborators took no record but names away, and (2) after a suitable break, my group created the assignment I am submitting without help from anyone other than the course staff.}
-
+\cleardoublepage
 \section{Olympic Scheduling}
 You are in charge of a live-streaming YouTube channel for the Olympics
 that promises never to interrupt an event. (So, once you start playing
@@ -342,8 +351,7 @@ imagine that we somehow solve sorting in constant time. (Note: it's
 possible to give a reduction that takes $O(n)$ time.)
 
 
-
-
+\cleardoublepage
 \section{Exhausted of Marriage}
 
 We modify SMP with the very reasonable change that not every woman
@@ -413,6 +421,7 @@ someone they left off of their preference list.
 		In order to show that the \textit{elopement instability} is not a feasible result of the modified G-S algorithm, we will show that the algorithm terminates with a man left married or unmarried  with an empty preference list. The precondition of the \textbf{while} loop outlines that an unengaged man must have a preference list, otherwise we terminate the procedure. This means that we cannot have an unengaged man and unengaged woman that prefer each other. This is because the while loop ensures that every man gets engaged or is left with an empty preference list. In the case of the latter, it is not possible that an unmarried man prefers any woman.
 	\end{proof}
 \end{enumerate}
+
 \subsection{Even More Exhausted}
 
 Briefly sketch the key elements of a proof that your modified G-S
@@ -425,6 +434,8 @@ Because Taj is a poopie poop pooop.
 \end{proof}
 
 
+
+\cleardoublepage
 \section{Footblog}
 
 The massive social network Footblog tracks relationships based on
@@ -438,26 +449,23 @@ We investigate whether Footblog's network is a single connected
 component.
 
 Footblog's founder created the first Footblog account, and that
-account has no ``sponsor'' (and cannot be assigned one). Every other
-account must have a single, designated ``sponsor'' who they have
-``enemied''. If $a$ sponsors $b$, we call $b$ the \emph{sponsee} of $a$.
+account has no ``sponsor'' (and cannot be assigned one). Every other account must have a single, designated ``sponsor'' who they have ``enemied''. If $a$ sponsors $b$, we call $b$ the\emph{sponsee} of $a$.
 
-There are then four major actions to consider on Footblog, some of
-which involve others as steps:
+There are then four major actions to consider on Footblog, some of which involve others as steps:
 \begin{description}
-\item[\emph{Joining}] When a new Footblog member joins, they must do so by
+	\item[\emph{Joining}] When a new Footblog member joins, they must do so by
                choosing as sponsor (and ``enemying'') someone already in
                the network who agrees to be their sponsor (and their
                enemy). After members join, they're free to ``enemy''
                and ``unenemy'' anyone except their sponsor and their
                sponsees.
-\item[\emph{Enemying}] Already described above. Remember that when one person
+	\item[\emph{Enemying}] Already described above. Remember that when one person
                 ``enemies'' another, the other must agree to ``enemy''
                 that person back.
-\item[\emph{Un-Enemying}] Unlike making an ``enemy'' link, one person alone can
+	\item[\emph{Un-Enemying}] Unlike making an ``enemy'' link, one person alone can
                    ``unenemy'' another person, in which case neither
                    ``enemies'' the other any more.
-\item[\emph{Change Sponsor}] If a person wishes to change their sponsor, they
+	\item[\emph{Change Sponsor}] If a person wishes to change their sponsor, they
      must ``unenemy'' their sponsor and simultaneously ``enemy'' a new
      sponsor. The new sponsor must agree to act as sponsor and enemy
      and \textbf{must be a new enemy} (i.e., must not already be the person's
@@ -465,43 +473,130 @@ which involve others as steps:
      sponsor, a sponsor cannot choose to change their sponsee.
 \end{description}
 
-You may assume these actions never happen in parallel, i.e., a defined
-sequence occurs of the operations: joining, enemying, un-enemying, and
-changing sponsors.
+You may assume these actions never happen in parallel, i.e., a defined sequence occurs of the operations: joining, enemying, un-enemying, and changing sponsors.
 \begin{enumerate}
-\item Based on these rules, sketch a brief proof that when a person
-   changes their sponsor, their new sponsor cannot also be one of
-   their sponsees.
-\item Based on these rules, either \textbf{sketch the key points in a proof that    Footblog's enemy graph forms a single connected component} or \textbf{give    a small sequence of actions that creates multiple components}.
+	\item Based on these rules, sketch a brief proof that when a person changes their sponsor, their new sponsor cannot also be one of their sponsees.
+	
+	\begin{proof}
+		Assume to the contrary that for a person $p$ their new sponsor $s$ is also their sponsee. Since $s$ was originally a sponsee, then $p$ and $s$ were already enemies. However this contradicts the definition of ``Change Sponsor'', as the new sponsor must be a new enemy.
+	\end{proof}		
+	
+	\item Based on these rules, either \textbf{sketch the key points in a proof that    Footblog's enemy graph forms a single connected component} or \textbf{give a small sequence of actions that creates multiple components}.
    
    Circle \textbf{one}: \hfill \textbf{SINGLE ONLY} \hfill \textbf{MAY BE MULTIPLE} \hfill
 
    \textbf{Provide your proof sketch or example:}
-\end{enumerate}
-\subsection{Centrality}
+   
+   Let the creator be denoted by the vertex $C$. Then a sequence of steps that will generate multiple components is
+   \begin{verbatim}
+     join(A, C)
+     join(B, A)
+     join(D, B)
+     changeSponsor(A, D)
+   \end{verbatim}
+   where join($v_i$, $v_j$) adds the vertex $v_i$ to the network with $v_j$ as its sponsor and changeSponsor($v_i$, $v_j$) changes the sponsor of vertex $v_i$ to be $v_j$.
+   
+   
+   To help visualize these steps, let us represent it as a graph $G=(V,E)$ such that an edge $(v_i, v_j)$ is defined if $v_i$ and $v_j$ are enemies. For ease of clarity, we will show a sponsor-sponsee relationship by a directed arrow, where the arrow head points to the sponsor. The graph $G$ prior to the call to changeSponsor is shown in Figure \ref{Graph1} and the graph $G'$ after the call to changeSponsor in Figure \ref{Graph2}.
+   
+   \begin{figure}[h]           
+   	\centering
+    \begin{subfigure}[b]{0.45\columnwidth}
+    		\centering
+        \begin{tikzpicture}[scale=0.75,transform shape]
+              \tikzstyle{LabelStyle}=[fill=white,sloped]
+              \Vertex[x=0,y=0]{B}
+              \Vertex[x=0,y=3]{A}
+              \Vertex[x=3,y=0]{D}
+              \Vertex[x=3,y=3]{C}
+            
 
-Footblog has defined a notion of ``centrality'' for its users: a user's
-``centrality'' is the minimum number of people they'd need to go through
-to get a message to the person farthest from them on the network,
-following ``enemy'' links. (The ``farthest'' person is exactly the one to
-whom there is the longest minimum-length path of enemies.)
+              %Edges bend left
+              \tikzstyle{EdgeStyle}=[bend left]		%\Edge[label=$120$](A)(B)  %if want to label the edge
+                  			
+              %Edges bend right
+              \tikzstyle{EdgeStyle}=[bend right]
+            
+              %Edges arrow
+              \tikzstyle{EdgeStyle}=[->]
+                  \Edge(A)(C)
+                  \Edge(B)(A)
+                  \Edge(D)(B) 
+         \end{tikzpicture}
+         \caption{Graph $G$}
+		 \label{Graph1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\columnwidth}
+    		\centering
+        \begin{tikzpicture}[scale=0.75,transform shape]
+              \tikzstyle{LabelStyle}=[fill=white,sloped]
+              \Vertex[x=0,y=0]{B}
+              \Vertex[x=0,y=3]{A}
+              \Vertex[x=3,y=0]{D}
+              \Vertex[x=3,y=3]{C}
+            
+
+              %Edges bend left
+              \tikzstyle{EdgeStyle}=[bend left]		%\Edge[label=$120$](A)(B)  %if want to label the edge
+                  			
+              %Edges bend right
+              \tikzstyle{EdgeStyle}=[bend right]
+        
+              %Edges arrow
+              \tikzstyle{EdgeStyle}=[->]
+                  \Edge(A)(D)
+                  \Edge(B)(A)
+                  \Edge(D)(B) 
+         \end{tikzpicture}
+         \caption{Graph $G'$}
+		 \label{Graph2}
+    \end{subfigure}
+    \caption{A simply connected Footblog graph $G$ and the same graph $G'$ after changeSponsor is called.}
+    \label{polynomials}
+	\end{figure}
+
+   
+\end{enumerate}
+
+\subsection{Centrality}
+Footblog has defined a notion of ``centrality'' for its users: a user's ``centrality'' is the minimum number of people they'd need to go through to get a message to the person farthest from them on the network, following ``enemy'' links. (The ``farthest'' person is exactly the one to whom there is the longest minimum-length path of enemies.)
 
 For this problem, \textbf{assume that the Footblog network does indeed form a single connected component.}
 
-Briefly describe an algorithm to compute the centrality of a user
-given a graph $G$ represented as a number of users $n > 0$ (where the
-users themselves are vertices named $\{v_1, v_2, \ldots, v_n\}$, a
-vertex number $i$ (where $1 \leq i \leq n$) of the user whose
-centrality we wish to compute, and an adjacency list $A$ of edges
-(i.e., an array of linked lists, where the entries in the list $A[j]$
-are the vertex numbers of the users $j$ has ``enemied''). You may use
-any common data structures you need. \textbf{Your algorithm must run in linear (i.e., $O(n + m)$ for $n$ nodes and $m$ edges) time.}
-
+Briefly describe an algorithm to compute the centrality of a userngiven a graph $G$ represented as a number of users $n > 0$ (where the users themselves are vertices named $\{v_1, v_2, \ldots, v_n\}$, a vertex number $i$ (where $1 \leq i \leq n$) of the user whose centrality we wish to compute, and an adjacency list $A$ of edges (i.e., an array of linked lists, where the entries in the list $A[j]$ are the vertex numbers of the users $j$ has ``enemied''). You may use any common data structures you need. \textbf{Your algorithm must run in linear (i.e., $O(n + m)$ for $n$ nodes and $m$ edges) time.}
 
 \begin{verbatim}
 Centrality(n, i, A):
-  // Fill in your algorithm here!
+  // Initialize distances
+  V := set of all vertices in graph G
+  for each vertx v in V - {v_i}
+    dist[v] := infinity
+  dist[i] := 0
+  
+  // Modified Dijkstra algorithm: compute shortest distance between
+  // v_i and all other vertices
+  while V is not empty:
+    u: node in V with smallest dist[]
+    remove u from V
+    
+    for each v in A[u]		   // all of u's neighbours
+      temp := dist[u] + 1
+      if temp < dist[v]
+        dist[v] := temp
+  
+  // Find maximium of the shortest distances
+  max_dist = 0
+  for each vertex v in V:
+    if dist[v] > max_dist
+      max_dist := dist[v]
+    
+  return max_dist
 \end{verbatim}
+
+\textbf{Runtime Analysis:} since the initialization of distances is done over $n$ vertices and the modified Dijkstra algorithm runs over $m$ edges, we have $O(n+m)$.
+
+
+\cleardoublepage
 \section{Heaps of Fun Might Be OK}
 
 You're managing a major online tournament of the hot new game Flappy
