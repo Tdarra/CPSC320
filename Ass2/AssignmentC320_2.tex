@@ -192,25 +192,11 @@ Darra, Taj \\
 % ================= Questions ================
 \cleardoublepage
 \section{Olympic Scheduling}
-You are in charge of a live-streaming YouTube channel for the Olympics
-that promises never to interrupt an event. (So, once you start playing
-an event, you must play only that event from the time it starts to the
-time it finishes.) You have a list of the events, where each event
-includes its: \textbf{start time, finish time (which must be after its start time), and expected audience value}. Your goal is to \textbf{make a schedule to broadcast the most valuable complete events}. \textbf{The best schedule is the one with the highest-valued event}; \textbf{in case of ties, compare second-highest valued events, and so on}. (So, for example, you
-obviously \textbf{will} include the single highest-valued event in the
-Olympics---presumably the hockey gold medal game---no matter what else
-it blocks you from showing.)
-(Times when you're not broadcasting events will be filled with ``human
-interest stories'' that have zero value; so, they're irrelevant.)
-\textbf{ASSUME: all event values are distinct and all event times are distinct.} I.e., for any two values $v_i$ and $v_j$ with $i \neq j$,
-$v_i \neq v_j$. The same holds for start and end times (e.g., for any
-two start times $s_i$ and $s_j$ with $i \neq j$, $s_i \neq
-s_j$). Further, for any two start and finish times $s_i$ and $f_j$,
-whether $i = j$ or not, $s_i \neq f_j$.
+\textit{You are in charge of a live-streaming YouTube channel for the Olympics that promises never to interrupt an event. (So, once you start playing an event, you must play only that event from the time it starts to the time it finishes.) You have a list of the events, where each event includes its: \textbf{start time, finish time (which must be after its start time), and expected audience value}. Your goal is to \textbf{make a schedule to broadcast the most valuable complete events}. \textbf{The best schedule is the one with the highest-valued event}; \textbf{in case of ties, compare second highest valued events, and so on}. (So, for example, you obviously \textbf{will} include the single highest-valued event in the Olympics---presumably the hockey gold medal game---no matter what else it blocks you from showing.) (Times when you're not broadcasting events will be filled with ``human interest stories'' that have zero value; so, they're irrelevant.) \textbf{ASSUME: all event values are distinct and all event times are distinct.} I.e., for any two values $v_i$ and $v_j$ with $i \neq j$, $v_i \neq v_j$. The same holds for start and end times (e.g., for any two start times $s_i$ and $s_j$ with $i \neq j$, $s_i \neq s_j$). Further, for any two start and finish times $s_i$ and $f_j$,
+whether $i = j$ or not, $s_i \neq f_j$.}
 
 \subsection{Na\"ive Algorithm}
-Consider the following algorithm. Assume that deleting an event from a
-list of events takes constant time.
+\textit{Consider the following algorithm. Assume that deleting an event from a list of events takes constant time.}
 \begin{verbatim}
 Naive(E):
   result = new empty list of events
@@ -228,15 +214,15 @@ Naive(E):
 \end{verbatim}
 
 \subsubsection{Finiteness}
-Briefly sketch a proof that the \texttt{while} loop in the algorithm above
-terminates. You need not give a formal proof, but you should include
-all key insights in the proof.
-\textbf{Representing the problem:} Let $E$ denote the set of all events to be streamed $E=\left\{e_1, \dotsm, e_n\right\}$ where $n=|E|.$ For every event $e \in E$, let $e$ comprise an ordered triple $e_i = (v_i, s_i, f_i)$ where $v,s$ and $f$ denote the audience value, start time, and finish time accordingly.
+\textit{Briefly sketch a proof that the \texttt{while} loop in the algorithm above terminates. You need not give a formal proof, but you should include all key insights in the proof.
+\textbf{Representing the problem:} Let $E$ denote the set of all events to be streamed $E=\left\{e_1, \dotsm, e_n\right\}$ where $n=|E|.$ For every event $e \in E$, let $e$ comprise an ordered triple $e_i = (v_i, s_i, f_i)$ where $v,s$ and $f$ denote the audience value, start time, and finish time accordingly.}
 
 \begin{proof}
 Let $n$ be the cardinality of $E$ (i.e. $n=|E|$).
+
 \textbf{Base Case:} if $n = 0$, then the while loop is never intiated
 Otherwise if $n=1$ then the event $e$ where $e \in E$ is the bestEvent as assigned and is removed after the execution of the first for loop. 
+
 \textbf{Inductive Step:} Assume true for $n=k$ events, then for $n=k+1$ events we have two cases as such:
 \begin{itemize}
 	\item In the first case, we delete the bestEvent and no conflicting events leaving us with $n=k+1-1=k$. By the inductive assumption the algorithm holds true.
@@ -273,16 +259,9 @@ proof.}
 \end{proof}
 
 \subsection{Reduction on Simplified Problem}
-To make the Olympic Broadcasting problem simpler, we completely remove
-start time and finish times from the problem. So, now events only have
-values (not times), and a ``schedule'' is just a set of selected
-events. To make it slightly harder again, you are not allowed to
-select two events $i$ and $j$ if their values are within 10 units of
-each other: $|v_i - v_j| \leq 10$.
-Give a correct reduction from this simplified Olympic Broadcasting
-problem to the sorting problem (where you provide both a list of items
-and a function to compare two items). Your reduction should take $O(n
-\lg n)$ time.
+\textit{To make the Olympic Broadcasting problem simpler, we completely remove start time and finish times from the problem. So, now events only have values (not times), and a ``schedule'' is just a set of selected events. To make it slightly harder again, you are not allowed to select two events $i$ and $j$ if their values are within 10 units of each other: $|v_i - v_j| \leq 10$. Give a correct reduction from this simplified Olympic Broadcasting problem to the sorting problem (where you provide both a list of items and a function to compare two items). Your reduction should take $O(n \lg n)$ time.}
+
+\textit{\textbf{NOTE:} You will likely find that (a) you can solve this with a single call to the sorting problem's solution algorithm and (b) producing the sorting instance is the easier part and transforming the solution to sorting into a solution to this simplified Olympic Broadcasting problem is the harder part. Don't forget to do both!}
 
 \textbf{Reduction: } We will reduce the Olympic Broadcasting problem to a Heapifying Array problem. In order to do this we will recycle the set of all events $E$ and pass it as an array to Heapify(E). This will return our desired schedule of events as $H$. This will take $O(n \lg n)$. For our comparaison function, we want to know if we can add an event $e_j$ if we have already added event $e_i$. The pseudocode is given below.
 \begin{verbatim}
@@ -293,51 +272,47 @@ and a function to compare two items). Your reduction should take $O(n
 	    return false	
 \end{verbatim} 
 \textbf{Translation to Olympic Broadcasting: } Now that we have our resulting $H$, for all events $e \in H$ and their respective values we have $v_1 > v_2 > \dotsm> v_k$ where $k =|H|$. This satisfies the first half of our definition of correctness from 1.1.3. 
-\textbf{NOTE:} You will likely find that (a) you can solve this with a single
-call to the sorting problem's solution algorithm and (b) producing the
-sorting instance is the easier part and transforming the solution to
-sorting into a solution to this simplified Olympic Broadcasting
-problem is the harder part. Don't forget to do both!
+
+\hl{Ask TA: what is this question asking}
+
 
 \subsection{Olympic Reduction, BONUS ONLY}
-This was significantly harder than we intended it to be! So, we
-removed it from the quiz/assignment. It's a bonus problem worth two
-CPSC 320 bonus points for extremely clear, correct, and efficient
-responses. (Extremely clear reductions that take $O(n)$ time---not
-counting an $O(1)$ number of calls to a sorting algorithm---may
-receive 3 bonus points, but we don't know if such reductions are
-possible.)
-Give a correct and efficient reduction from the Olympic broadcasting
-problem to the sorting problem (where you provide both a list of items
-and a function to compare two items). Your reduction---combined with
-an $O(n \lg n)$ sorting algorithm---should be asymptotically more
-efficient than the na\"ive algorithm above.
+\textit{This was significantly harder than we intended it to be! So, we removed it from the quiz/assignment. It's a bonus problem worth two CPSC 320 bonus points for extremely clear, correct, and efficient responses. (Extremely clear reductions that take $O(n)$ time---not counting an $O(1)$ number of calls to a sorting algorithm---may receive 3 bonus points, but we don't know if such reductions are possible.) Give a correct and efficient reduction from the Olympic broadcasting problem to the sorting problem (where you provide both a list of items and a function to compare two items). Your reduction---combined with an $O(n \lg n)$ sorting algorithm---should be asymptotically more efficient than the na\"ive algorithm above.}
+
+\hl{ASK TA: what is this question asking}
 
 \begin{verbatim}
-	  Bonus(E):
+  Bonus(E):
+    H := Heapify(E)    
+    result := new empty list of events
+    prev := H[0]	            // add highest value event to result
+    delete prev from H
+    add prev to result
+    
+    while H is not empty:
+      if canAdd(prev, H[0]):
+        add H[0] to result
+      prev := H[0]
+      delete prev from H
+      
+    return result 
 \end{verbatim}
 
 \subsubsection{Correctness}
-Briefly sketch a proof that your algorithm is correct. You need not
-give a formal proof, but you should include all key insights in the
-proof.
+\textit{Briefly sketch a proof that your algorithm is correct. You need not give a formal proof, but you should include all key insights in the
+proof.}
 
 \subsubsection{Efficiency}
-Give and briefly justify a good asymptotic bound on the runtime
-of \textbf{just} your reduction, \textbf{not} including the call to the sorting
-algorithm. So, for the purposes of this asymptotic bound, you can
-imagine that we somehow solve sorting in constant time. (Note: it's
-possible to give a reduction that takes $O(n)$ time.)
+\textit{Give and briefly justify a good asymptotic bound on the runtime
+of \textbf{just} your reduction, \textbf{not} including the call to the sorting algorithm. So, for the purposes of this asymptotic bound, you can
+imagine that we somehow solve sorting in constant time. (Note: it's possible to give a reduction that takes $O(n)$ time.)}
+
 
 
 \cleardoublepage
 \section{Exhausted of Marriage}
-We modify SMP with the very reasonable change that not every woman
-need list every man in her preferences. She prefers to be unmarried to
-marrying unlisted men. Note that she clearly prefers any man on her
-preference list to any man not on her preference list. Men can
-similarly truncate their lists of women.
-Here is the Gale-Shapley algorithm:
+\textit{We modify SMP with the very reasonable change that not every woman need list every man in her preferences. She prefers to be unmarried to marrying unlisted men. Note that she clearly prefers any man on her
+preference list to any man not on her preference list. Men can similarly truncate their lists of women. Here is the Gale-Shapley algorithm:}
   \begin{algorithmic}[1]
   \Procedure{Stable-Marriage}{$M$, $W$}
     \State initialize all men in $M$ and women in $W$ to unengaged
@@ -355,27 +330,20 @@ Here is the Gale-Shapley algorithm:
     \State report the set of engaged pairs as the final matching
   \EndProcedure
   \end{algorithmic}
-With one small change, we can apply this algorithm and ensure that the
-(not necessarily perfect) matching produced never marries a person to
-someone they left off of their preference list.
+\textit{With one small change, we can apply this algorithm and ensure that the (not necessarily perfect) matching produced never marries a person to someone they left off of their preference list.}
+
 \begin{enumerate}
-	\item Make the small change necessary \textbf{to the algorithm above}.
+	\item \textit{Make the small change necessary \textbf{to the algorithm above}.}
 	
 	\qquad Line 6: if ($w$ is unengaged \& $m$ in $w$'s preference list) then
-	\item Briefly sketch the key elements of a proof that the algorithm terminates.
+	\item \textit{Briefly sketch the key elements of a proof that the algorithm terminates.}
 	
 	In the worst case, the algorithm will terminate in $n^2$ iterations, i.e. men have complete preference lists. Let $S(k)$ be the set of pairs $(m, w)$ such that $m$ has proposed to $w$ on iteration $k$ of the Gale-Shapley algorithm. Then we can see that every new iteration increases the number of pairs (or in mathematical notation: $\forall k, |S(k+1)| > S(k)$). However, since in the worst case we have $n^2$ possible pairs of men and women we know that there can be at most $n^2$ iterations of the while loop, hence the algorithm must terminate.
 	
 	
-	\item We need a new definition of instability now that some people may
-   end up unmarried. Here is one new type of instability that we call
-   an \emph{elopement instability}: m$_i$ and w$_j$ are both unmarried but list
-   each other on their preference lists (in which case they have
-   incentive to break the imposed matching and marry each other).
+	\item \textit{ We need a new definition of instability now that some people may end up unmarried. Here is one new type of instability that we call an \emph{elopement instability}: m$_i$ and w$_j$ are both unmarried but list each other on their preference lists (in which case they have incentive to break the imposed matching and marry each other).}
    
-   Describe another new type of instability involving an unmarried
-   woman. (Note: an analogous instability exists involving an
-   unmarried man.)
+   \textit{Describe another new type of instability involving an unmarried woman. (Note: an analogous instability exists involving an unmarried man.)}
    
    \textbf{The mistress instability: } We can define a new instability with the following conditions:
    		\begin{enumerate}
@@ -391,7 +359,7 @@ someone they left off of their preference list.
    			\item $m_i$ prefers $w_j$ to being unmarried
    
    \end{enumerate}
-	\item Briefly sketch the key elements of a proof that your modified G-S algorithm cannot generate an elopement instability.
+	\item \textit{Briefly sketch the key elements of a proof that your modified G-S algorithm cannot generate an elopement instability.}
 	
 	\begin{proof}
 		In order to show that the \textit{elopement instability} is not a feasible result of the modified G-S algorithm, we will show that the algorithm terminates with a man left married or unmarried  with an empty preference list. The precondition of the \textbf{while} loop outlines that an unengaged man must have a preference list, otherwise we terminate the procedure. This means that we cannot have an unengaged man and unengaged woman that prefer each other. This is because the while loop ensures that every man gets engaged or is left with an empty preference list. In the case of the latter, it is not possible that an unmarried man prefers any woman.
@@ -399,10 +367,10 @@ someone they left off of their preference list.
 \end{enumerate}
 
 \subsection{Even More Exhausted}
-Briefly sketch the key elements of a proof that your modified G-S
+\textit{Briefly sketch the key elements of a proof that your modified G-S
 algorithm cannot generate any of the other three types of instability
 (the classic SMP instability, the instability you defined above, and
-the analogous instability with the roles of men and women swapped).
+the analogous instability with the roles of men and women swapped).}
 
 \begin{proof}
 To show that no such instability may arise, we will construct a mini ``proof" for each instability.
@@ -428,10 +396,7 @@ To show that no such instability may arise, we will construct a mini ``proof" fo
 \cleardoublepage
 \section{Footblog}
 The massive social network Footblog tracks relationships based on
-whether two people have ``enemied'' each other. (``Enemyship'' is a mutual
-agreement, meaning that a person is not allowed to ``enemy'' another
-person unless the other person agrees to ``enemy'' them back. No one can
-``enemy'' themselves.)
+whether two people have ``enemied'' each other. (``Enemyship'' is a mutual agreement, meaning that a person is not allowed to ``enemy'' another person unless the other person agrees to ``enemy'' them back. No one can ``enemy'' themselves.)
 
 \subsection{Isolationism}
 We investigate whether Footblog's network is a single connected
