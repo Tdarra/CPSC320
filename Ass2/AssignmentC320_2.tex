@@ -581,19 +581,17 @@ Centrality(n, i, A):
 
 \cleardoublepage
 \section{Heaps of Fun Might Be OK}
-You're managing a major online tournament of the hot new game Flappy
+\textit{You're managing a major online tournament of the hot new game Flappy
 Squirrel. There are a huge number of users, each with a
 competitiveness rating (a floating point number). You need an
 algorithm that---given a desired number of competitors $c$ and a list
 of these competitiveness ratings (an array $A$ of length
 $n$)---returns a list of the $c$ highest ratings. You're guaranteed
-that $c \leq n$. (Note: we use 1-based indexing on arrays.)
+that $c \leq n$. (Note: we use 1-based indexing on arrays.)}
 
 \subsection{Algorithm 1}
-Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
-bound) on the runtime of the following algorithm to solve this
-problem. (\textbf{Note:} the \texttt{buildMaxHeap} operation returns a max-heap
-built from the elements of a given array of length $n$ in $O(n)$
+\textit{Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this problem. (\textbf{Note:} the \texttt{buildMaxHeap} operation returns a max-heap built from the elements of a given array of length $n$ in $O(n)$}
 time.)
 \begin{verbatim}
 TopC(A, c):
@@ -608,10 +606,8 @@ TopC(A, c):
 \textbf{Answer: } The asymptotic upper-bound seems to be $O(cn)$. Given that \texttt{buildMaxHeap} operates at $O(n)$ we proceed to the \texttt{for} loop that executes $c$ times. In this loop, we call \texttt{deleteMax} which removes the maximum element in the heap and calls the necessary percolations to rebalance the heap. This should take $O(n)$. Hence, we have $n+1+c(1+n)+1 = O(cn)$.
 
 \subsection{Algorithm 2}
-Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
-bound) on the runtime of the following algorithm to solve this
-problem. (Note: the notation \texttt{A[1..c]} produces a list of the elements
-\texttt{A[1], A[2], A[3], ..., A[c]} in $O(c)$ time.)
+\textit{Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this problem. (Note: the notation \texttt{A[1..c]} produces a list of the elements \texttt{A[1], A[2], A[3], ..., A[c]} in $O(c)$ time.)}
 \begin{verbatim}
 TopC(A, c):
   for i = 1 to c:
@@ -625,13 +621,12 @@ TopC(A, c):
   return A[1..c]
 \end{verbatim}
 
-\textbf{Answer: } Algorithm 2 executes in $O(cn)$ time. The outer \texttt{for} loop  performs $c$ operations. The nested \texttt{for} loop performs  $n$ operations. Thus, by the end of algorithm we have $O(cn + c) = O(cn)$
+\textbf{Answer: } Algorithm 2 executes in $O(cn)$ time. The outer \texttt{for} loop  performs $c$ operations. The nested \texttt{for} loop performs  approximately $n$ operations. Thus, by the end of algorithm we have $O(cn + c) = O(cn)$
 
 
 \subsection{Algorithm 3}
-Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
-bound) on the runtime of the following algorithm to solve this
-problem.
+\textit{Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this problem.}
 \begin{verbatim}
 TopC(A, c):
   sort A using an efficient, comparison-based sorting algorithm
@@ -642,10 +637,9 @@ TopC(A, c):
 
 
 \subsection{Algorithm 4}
-Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
-bound) on the runtime of the following algorithm to solve this
-problem. (Note: \texttt{Elements(h)} produces all elements in the heap \texttt{h} in
-constant time, but \texttt{h} can no longer be used after that point.)
+\textit{Give and briefly justify a good asymptotic upper-bound (i.e., big-$O$
+bound) on the runtime of the following algorithm to solve this problem. (Note: \texttt{Elements(h)} produces all elements in the heap \texttt{h} in
+constant time, but \texttt{h} can no longer be used after that point.)}
 \begin{verbatim}
 TopC(A, c):
   h <- empty min-heap
