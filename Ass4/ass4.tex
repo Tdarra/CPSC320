@@ -297,139 +297,54 @@ divideConquer(A,n):
 \item Give and briefly justify a good asymptotic bound on the runtime of
    your algorithm.
 \end{enumerate}
-
-\cleardoublepage
+%\clearpage
 \section{CS CSI}
 \label{sec-2}
 
-\textit{The major credit card company DoctorCard can either check a transaction to see if it's fraudulent or skip it. Each transaction comes with an estimated value for fraud checking (based on the size and suspiciousness of the transaction). Skipping a transaction provides no value. Checking if it's fraudulent provides the estimated value. However, because of computational costs, DoctorCard \textbf{must} skip checking the next two transactions if they check the current one.}
+The major credit card company DoctorCard can either check a
+transaction to see if it's fraudulent or skip it. Each transaction
+comes with an estimated value for fraud checking (based on the size
+and suspiciousness of the transaction). Skipping a transaction
+provides no value. Checking if it's fraudulent provides the estimated
+value. However, because of computational costs, DoctorCard \textbf{must} skip
+checking the next two transactions if they check the current
+one.
 
-\textit{We're interested in maximizing the total fraud value checked given such an array of estimated values $A$.}
+We're interested in maximizing the total fraud value checked given
+such an array of estimated values $A$.
 
-\textit{So, for example, the optimal transactions to check are underlined in the following transaction record: $[4, \underline{9}, 1, 10, 1, \underline{7}, 2, 2]$. Note that each checked (underlined) transaction must be followed by at least two unchecked transactions and that therefore the last two entries must always be unchecked.}
+So, for example, the optimal transactions to check are underlined in
+the following transaction record: $[4, \underline{9}, 1, 10, 1,
+\underline{7}, 2, 2]$. Note that each checked (underlined) transaction
+must be followed by at least two unchecked transactions and that
+therefore the last two entries must always be unchecked.
 
-\textit{Design an efficient algorithm to find the maximum total fraud
-value. Your algorithm need not find the actual transactions to check, just the value}.\footnote{If you want a justification of that: DoctorCard is comparing the value achieved by their online algorithm---i.e., algorithm that makes choices as transactions arrive---against the optimal total achievable.} \textit{Your algorithm may use linear memory and time.}
+Design an efficient algorithm to find the maximum total fraud
+value. Your algorithm need not find the actual transactions to check,
+just the value.\footnote{If you want a justification of that: DoctorCard is
+comparing the value achieved by their online algorithm---i.e.,
+algorithm that makes choices as transactions arrive---against the
+optimal total achievable.
+ } Your algorithm may use linear memory and
+time.
 
-\textit{\textbf{HINT:} Start by designing a recurrence $F(n)$ that describes the optimal fraud value achievable for transactions $1,\ldots,n$ in terms of the optimal value(s) for smaller stretches of the array. Then,
-either convert that into a recursive solution and memoize it or convert that into a dynamic programming solution.}
-
-Let $F(n)$ describe the optimal fraud value achievable for $n\in {N}$ transactions and be defined by
-\begin{align*}
-	F(n) = \max[&A(n-2) + F(n-2), \\
-	& A(n-3) + F(n-3), \\
-	& A(n-4) + F(n-4)]
-\end{align*}
-
-The pseudocode algorithm may be seen below.
-\cleardoublepage
-\begin{verbatim}
-  Soln(A, n):
-    TableCheck(Table, i):
-      if i <= 0:
-        return -infinity
-      else
-        return Table[i]
-    
-    ACheck(A, i):
-      if i <= 0:
-        return -infinity
-      else
-        return A[i]
-    
-    
-    // Initialize Table
-    let Table[n] be array with 1-indexing
-    indicate all elements to 0
-    
-    if n > 2 {
-      for i = 3, ..., n
-        Table[i] = max[ACheck(n-2) + TableCheck(A, n-2),
-                       ACheck(n-3) + TableCheck(A, n-3),
-                       ACheck(n-4) + TableCheck(A, n-4)]
-    }
-    return Table[n]
-\end{verbatim}
-
-
-\clearpage
+\textbf{HINT:} Start by designing a recurrence $F(n)$ that describes the
+optimal fraud value achievable for transactions $1,\ldots,n$ in terms
+of the optimal value(s) for smaller stretches of the array. Then,
+either convert that into a recursive solution and memoize it or
+convert that into a dynamic programming solution.
+%\clearpage
 \subsection{CSI Finds the Culprit}
 \label{sec-2-1}
-\textit{Adapt your original algorithm so that it produces the optimal set of indexes to check for fraud rather than the maximum total value.}
-\begin{verbatim}
-  SolnPath(A, n):
-    TableCheck(Table, i):
-      if i <= 0: return -infinity
-      else       return Table[i]
-            
-    Soln(A, n):  
-      ACheck(A, i):
-        if i <= 0: return -infinity
-        else       return A[i]
 
-      if n > 2 {
-        for i = 3, ..., n
-          Table[i] = max[ACheck(n-2) + TableCheck(A, n-2),
-                         ACheck(n-3) + TableCheck(A, n-3),
-                         ACheck(n-4) + TableCheck(A, n-4)] }
-    
-    Explain(A, n):
-      if n-2 <= 0
-        return emptyset
-      elif TableCheck(n-2) > [TableCheck(n-3) && TableCheck(n-4)]
-        explain(A, n-2) U {n-2}        // Union
-      elif TableCheck(n-3) > TableCheck(n-4)
-        explain(A, n-3) U {n-3}
-      else
-        explain(A, n-4) U {n-4}
-
-    
-    // Initialize Table
-    let Table[n] be array with 1-indexing
-    indicate all elements to 0
-    
-    // Populate table
-    Soln(A, n)
-    
-    // Explain!
-    return Explain(A, n)
-\end{verbatim}
-
+Adapt your original algorithm so that it produces the optimal set of indexes to
+check for fraud rather than the maximum total value.
 \subsection{Forgetful CSI}
 \label{sec-2-2}
 
-\textit{Instead adapt your original algorithm so that it produces only the
-maximum total value but does it using constant memory.}
-
-At any time, one only needs 5 columns: curr, curr-1, curr-2, curr-3, curr-4. Thus we have
-
-\begin{verbatim}
-  Soln(A, n):
-    ACheck(A, i):
-      if i <= 0:
-        return -infinity
-      else
-        return A[i]
-    
-    
-    // Initialize columns
-    intitialize curr, curr-1, curr-2, curr-3, curr-4 to be 0
-    
-    if n > 2 {
-      for i = 3, ..., n
-        curr = max[ACheck(n-2) + curr-2,
-                   ACheck(n-3) + curr-3,
-                   ACheck(n-4) + curr-4
-      curr-4 = curr-3
-      curr-3 = curr-2
-      curr-2 = curr-1
-      curr-1 = curr    
-    }
-
-    return curr
-\end{verbatim}
-
-\clearpage
+Instead adapt your original algorithm so that it produces only the
+maximum total value but does it using constant memory.
+%\clearpage
 \section{Hitting Rock Bottom}
 \label{sec-3}
 
@@ -566,7 +481,7 @@ to be a local minimum.)
 \item Give and briefly justify a good asymptotic bound on the runtime of
    your algorithm.
    
-   \textbf{Answer: } Let us begin with the best case run time. for none of the base cases. This occurrs when we calculate the global min of the edges and middle lines. This takes about $6n$. The best case here is that that global min is also a local min, given that it is smaller than all of its neighbors. This means our algorithm can achieve $\Omega(n)$. Now let us determine the worst case. Let us suppose our 2-d array has $n=7$, with 49 elements. Now, assume that the local minimum exists at position,1-indexed, $(2,2)$. This mean we first calculate and determine a global minimum, taking $6n$ operations. Then we compare this global min to its neighbors and find that the smallest one exists in the same $(\frac{n}{2}, \frac{n}{2})$ submatrix as the local min. This is where the recursion comes in and we pass this submatrix with $n_{sub}=\floor{\frac{n}{2}}$. This submatrix will have dimensions 3x3, and 9 elements. We then repeat all of our above steps for this new subproblem (which happens to be a base case). This is where our algorithm performs the divide and conquer. So for our recurrence relation:
+   \textbf{Answer: } Let us begin with the best case run time. for none of the base cases. This occurrs when we calculate the global min of the edges and middle lines. This takes about $6n$. The best case here is that that global min is also a local min, given that it is smaller than all of its neighbors. This means our algorithm can achieve $\Omega(n)$. Now let us determine the worst case. Let us suppose our 2-d array has $n=7$, with 49 elements. Now, assume that the local minimum exists at position,1-indexed, $(2,2)$. This mean we first calculate and determine a global minimum, taking $6n$ operations. Then we compare this global min to its neighbors and find that the smallest one exists in the same $(\frac{n}{2}, \frac{n}{2})$ submatrix as the local min. This is where the recursion comes in and we pass this submatrix with $n_{sub}=\floor{\frac{n}{2}}$. This submatrix will have dimensions 3x3, and 9 elements. We then repeat all of our above steps for this new subproblem (which happens to be a base case). This is where our algorithm performs the divide and conquer. So for our recurrence relation with the finding of global min (6n) : $$T(n) \leq T(\frac{n}{4}) + cn. $$ Which satisfies $O(n \log n)$
    
 \item Sketch the key points in a proof that your algorithm is
    correct. (It may help to note that in the inital array of $n$
@@ -574,10 +489,9 @@ to be a local minimum.)
    because the global minimum is also guaranteed to be a local
    minimum.)
    
-   \textbf{Answer: } Once again the distinctness of the integers means our algorithm cant indeed find a global minimum and not stall , performance wise. There will always exist a global minimum such that it is less than or greater than its neighbor(s). The second key point is the relation between the edges, midlines, and elements bounded by these lines. The global minimum of the edges and midlines is represented $g$. If $g$ is smaller than all its neighbors, then we return $g$ and we are done. However, if there exists a neighbor $n$ such that $n < g$. Then $n$ is not on any of the edges or mid lines. But rather, $n$ is in the submatrix (quadrant ) bounded by the edges and midlines. The key here is proving that there exists a local minimum in this panel. Let us denote the set of elements comprising the edges and mid lines as $E$. And so $g \in E$, but $n \not \in E$. Given that $g$ is global minimum and $n < g$, then we know $n$ is less than all elements in $E$. This fact means that we no longer need the remainder of the 2-d array since there must be a local minimum here. Whether it is $n$ itself or another element not in $E$. Hence, we recurse into this quadrant to search for it using the above fact. 
+   \textbf{Answer: } Once again the distinctness of the integers means our algorithm cant indeed find a global minimum and not stall , performance wise. There will always exist a global minimum such that it is less than or greater than its neighbor(s). The second key point is the relation between the edges, midlines, and elements bounded by these lines. The global minimum of the edges and midlines is represented $g$. If $g$ is smaller than all its neighbors, then we return $g$ and we are done. However, if there exists a neighbor $n$ such that $n < g$. Then $n$ is not on any of the edges or mid lines. But rather, $n$ is in the submatrix (quadrant ) bounded by the edges and midlines. The key here is proving that there exists a local minimum in this panel. Let us denote the set of elements comprising the edges and mid lines as $E$. And so $g \in E$, but $n \not \in E$. Given that $g$ is global minimum and $n < g$, then we know $n$ is less than all elements in $E$. This fact means that we no longer need the remainder of the 2-d array since there must be a local minimum here. Whether it is $n$ itself or another element not in $E$. Hence, we recurse into this quadrant to search for it using the above fact.
 \end{enumerate}
-
-%\cleardoublepage
+%\clearpage
 \section{No Chutes, Just Ladders}
 \label{sec-4}
 
@@ -618,31 +532,6 @@ reach previous spaces on the board and in terms of $A[n]$ (the set of
 spaces from which space $n$ is reachable). Then, either convert that
 into a recursive solution and memoize it or convert that into a
 dynamic programming solution.
-
-
-Let $C(n)$ describe the number of ways to reach space $n\in {N}$ and be defined by
-\begin{align*}
-	C(n) = \begin{cases}
-		0, \text{ if } \quad n=1\\
-		\sum_i C(i), \text{ s.t. } i \in A[n]
-	\end{cases}
-\end{align*}
-For example, if $A[6] = \{2, 3, 5\}$, then $C(6)=C(2)+C(3)+C(5)$.
-
-\begin{verbatim}
-  Soln(A, n):
-    // Initialize Table
-    let Table[n] be array
-    indicate all elements to 0
-    
-    // Dynamic Programming
-    for i = 1, ..., n
-      for j = 1, ..., |A[i]|       // i.e. for each element in set A[i]
-        prev = A[i][j]
-        Table[i] += Table[prev]
-    
-    return Table[n]
-\end{verbatim}
 %\clearpage
 
 \end{document}
