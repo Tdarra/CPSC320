@@ -80,6 +80,8 @@
 	\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 	\newcommand{\Q}{\mathbb{Q}}
 	\newcommand{\N}{\mathbb{N}}
+	\newcommand\floor[1]{\lfloor#1\rfloor}
+\newcommand\ceil[1]{\lceil#1\rceil}
 	
 	% Augmented Matrix
 	\makeatletter
@@ -386,7 +388,7 @@ underlined: $[8, \underline{2}, 3, 7, 9, \underline{5}, 6, 12,
 \item Give and briefly justify a good asymptotic bound on the runtime of
    your algorithm. 
    
-   \textbf{Answer: }Our solution is an implementation of binary search. Constant time results when one of the base cases occur or even the first \texttt{A[mid]} being the local minimum. For the recursion, we iteratively dispose of half the solution space. We model the algorithm with the following recurrence relation with base cases $n=1$ and $n=2$ that operate in constant time: $$T(n) \leq T(\frac{n}{2}) + 1$$ and so $\Theta (\log n)$.
+   \textbf{Answer: }Our solution is an implementation of binary search. Constant time results when one of the base cases occur or even the first \texttt{A[mid]} being the local minimum. For the recursion, we iteratively dispose of half the solution space. We model the algorithm with the following recurrence relation with base cases $n=1$ and $n=2$ that operate in constant time: $$T(n) \leq T(\frac{n}{2}) + 1$$ and so $O(\log n)$.
    %\vfill
 \item Sketch the key points in a proof that your algorithm is
    correct. (You may find it useful to establish and take advantage of
@@ -441,8 +443,12 @@ to be a local minimum.)
    local minimum might be. It will likely help to compare against your
    example!
    
-   \textbf{Answer: } To simplify our solution, assume  that $n = 2^k -1$ for $k \in \mathbb{N}$. Our solution takes the following steps:
+   \textbf{Answer: } To simplify our solution, assume  that $n = 2^k -1$ for $k \in \mathbb{N}$. Our recursive algorithm takes the following steps:
+   
+      getLocalMin(A, n):
    \begin{itemize}
+   \item If n =1, return single element as local min
+   \item If n = 2 or n = 3 return global min of the elements as local min
    \item Generate an array $6n$ comprising the elements on the edges, $4n$, and the two symmetry lines forming the perpindicular, $2n$.
    \item Find the global minimum of that array.
    \item Check the neighbor(s) of this global min and determine if the neighbors are smaller than the global min. 
@@ -462,16 +468,28 @@ to be a local minimum.)
    \end{itemize}
    \end{itemize}
    \item If the global min is indeed smaller than all its neighbors, return this global min of the array as the local min of the 2-d array
-   \item If there exists a neighbor smaller than the global minimum, then this signals the next step of the subproblem. You will then treat the panel (sub-matrix of the 2-d array) containing the smaller neighbor bounded by the edges and middle lines as a new 2-d array. This sets up a divide and conquer algorithm rather nicely.   
-   \item For this new, smaller 2-d array bounded by the edges and middle lines, repeat the above steps until a local minimum is found or $n=1$.
+   \item If there exists a neighbor smaller than the global minimum, then this signals the next step of the subproblem. You will then treat the panel (sub-matrix of the 2-d array) containing the smaller neighbor bounded by the edges and middle lines as a new 2-d array. This sets up a divide and conquer algorithm rather nicely. Let us denote the neighbor smaller than the global min as \texttt{smallerNeighbor}.  Also let use use a function \texttt{getIndexOf()} which returns the ordered pair of the \texttt{smallerNeighbor} position on the 2-d array where \texttt{getIndexOf()[1]} returns the x-coordinate, and \texttt{getIndexOf()[2]} returns the y-coordinate. For the last simplification we will denote \texttt{mid = floor(n/2)}. 
+   \begin{itemize}
+   \item If  \texttt{getIndexOf(smallerNeighbor)[1] < mid} and      \texttt{getIndexOf(smallerNeighbor)[2] < mid}, then our local min is in the upper left quadrant of \texttt{A}, and so we call \texttt{getLocalMin(A[1...mid][1...mid], mid)}
+   \item If \texttt{getIndexOf(smallerNeighbor)[1] > mid} and      \texttt{getIndexOf(smallerNeighbor)[2] < mid}, then our local min is in the upper right quadrant of \texttt{A}, and so we call \texttt{getLocalMin(A[mid+1...n][1...mid], mid)}
+   \item If \texttt{getIndexOf(smallerNeighbor)[1] > mid} and      \texttt{getIndexOf(smallerNeighbor)[2] > mid}, then our local min is in the bottom right quadrant of \texttt{A}, and so we call \texttt{getLocalMin(A[mid+1...n][mid+1...n], mid)}
+   \item Else, our local min is in the bottom left quadrant and so we call \\
+    \texttt{getLocalMin(A[1...mid][mid+1...n], mid)}
+   \end{itemize}
+   \item For this new, smaller 2-d array (roughly a quarter the size) bounded by the edges and middle lines, repeat the above steps until a local minimum is found or $n=1,2$.
    \end{itemize}
 \item Give and briefly justify a good asymptotic bound on the runtime of
    your algorithm.
+   
+   \textbf{Answer: } Let us begin with the best case run time. for none of the base cases. This occurrs when we calculate the global min of the edges and middle lines. This takes about $6n$. The best case here is that that global min is also a local min, given that it is smaller than all of its neighbors. This means our algorithm can achieve $\Omega(n)$. Now let us determine the worst case. Let us suppose our 2-d array has $n=7$, with 49 elements. Now, assume that the local minimum exists at position,1-indexed, $(2,2)$. This mean we first calculate and determine a global minimum, taking $6n$ operations. Then we compare this global min to its neighbors and find that the smallest one exists in the same $(\frac{n}{2}, \frac{n}{2})$ submatrix as the local min. This is where the recursion comes in and we pass this submatrix with $n_{sub}=\floor{\frac{n}{2}}$. This submatrix will have dimensions 3x3, and 9 elements. We then repeat all of our above steps for this new subproblem (which happens to be a base case). This is where our algorithm performs the divide and conquer. So for our recurrence relation:
+   
 \item Sketch the key points in a proof that your algorithm is
    correct. (It may help to note that in the inital array of $n$
    distinct numbers, there is always at least one local minumum
    because the global minimum is also guaranteed to be a local
    minimum.)
+   
+   \textbf{Answer: } Once again the distinctness of the integers means our algorithm cant indeed find a global minimum and not stall , performance wise. There will always exist a global minimum such that it is less than or greater than its neighbor(s). The second key point is the relation between the edges, midlines, and elements bounded by these lines. The global minimum of the edges and midlines is represented $g$. If $g$ is smaller than all its neighbors, then we return $g$ and we are done. However, if there exists a neighbor $n$ such that $n < g$. Then $n$ is not on any of the edges or mid lines. But rather, $n$ is in the submatrix (quadrant ) bounded by the edges and midlines. The key here is proving that there exists a local minimum in this panel. Let us denote the set of elements comprising the edges and mid lines as $E$. And so $g \in E$, but $n \not \in E$. Given that $g$ is global minimum and $n < g$, then we know $n$ is less than all elements in $E$. This fact means that we no longer need the remainder of the 2-d array since there must be a local minimum here. Whether it is $n$ itself or another element not in $E$. Hence, we recurse into this quadrant to search for it using the above fact. 
 \end{enumerate}
 %\clearpage
 \section{No Chutes, Just Ladders}
