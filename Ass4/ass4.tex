@@ -206,7 +206,7 @@ For $n$ seconds, they have the price point reached in each second in
 their auctions. They want to find the largest price-over-time stretch
 in their data. That is, given an array $A$ of $n$ price points, they
 want to find the largest possible value of $f(i,d) =
-d*\min(A[i],A[i+1],\ldots,A[i+d-1],A[i+d])$ where $i$ is the index of
+d*\min(A[i],A[i+1],\ldots,A[i+d-1])$ where $i$ is the index of
 the left end of a stretch of seconds, $d$ is the duration in seconds
 of that stretch, and the function $f$ computes the duration times the
 minimum price over that period. (Prices are positive, $d \geq 0$, and
@@ -221,29 +221,27 @@ the value for this optimal stretch starting at index 3 and running for
 \item Give a \textbf{brute force} algorithm to solve this problem. Your algorithm
    must run in polynomial time.
    
-   \textbf{Answer:} Our brute force algorithm simply generates the entire solution space, which is every possible "stretch", for our price array, $A$, and computes $f(i,d) =
+   \textbf{Answer:} Our brute force algorithm simply generates the entire solution space, which is every possible ``stretch", for our price array, $A$, and computes $f(i,d) =
 d*\min(A[i],A[i+1],\ldots,A[i+d-1])$ for every single one of these stretches. We keep track of the max value. Our input is the price array and its length. Assume \texttt{A[a...c]} returns a subset of the array between the indices $a$ and $c$ in constant time. 
 \begin{verbatim}
 bruteForceMin(A, n):
- max = 0
- for (i = 1; i < n+1; i++): 
-  for (j = 0; i+j<n+2; j++): 
-   if j = 0:
-    min = 0
-   else:
-    min = j * min(A[i...i+j-1])
-   if min > max:
-    max = min
- return max		
+  max = 0
+  min = 0
+  
+  for (i = 1; i < n+1; i++): 
+    for (j = 0; j < n+2-i; j++):
+      min = j * min(A[i...i+j-1])
+      if min > max:
+        max = min
+       
+  return max		
 \end{verbatim}
-   %\vfill
-   %\vfill
-   %\vfill
+
 \item Give and briefly justify a good asymptotic bound on the runtime of
    your algorithm.
    %\vfill
    
-   \textbf{Answer: } The for loops generate every possible "stretch" of our price array $A$. For example, for $n=4$, the loops execute 4 + 3 + 2 + 1 = 10 times. Since this is of form n+(n-1)+(n-2)..., a sum of a finite arithmetic series is $\frac{n(n+1)}{2}$. Assuming all the operations in the body of the inner for loop operate in constant time, our brute force algorithm runs in $\Theta(\frac{n(n+1)}{2})$. Which is polynomial time. 
+   \textbf{Answer: } The for loops generate every possible ``stretch" of our price array $A$. For example, for $n=4$, the loops execute $4 + 3 + 2 + 1 = 10$ times. Since this is of form $n+(n-1)+(n-2)\ldots$, a sum of a finite arithmetic series is $\frac{n(n+1)}{2}$. Assuming all the operations in the body of the inner for loop operate in constant time, our brute force algorithm runs in $\Theta(\frac{n(n+1)}{2})$. This is polynomial time since $\Theta(\frac{n(n+1)}{2}) \in O(n^2)$
    %\vfill
 \end{enumerate}
 %\clearpage
@@ -280,21 +278,54 @@ efficient than the brute force approach.
 
 \item Give an efficient algorithm for finding the optimal price stretch.
 
-\textbf{Answer: } Our divide and conquer algorithm choose a midpoint \texttt{mid} caclulated as the ceiling of the length of $A$ divided by 2. We then subset our price array incrementlally by taking the offset of the midpoint at every iteration and increasing it by 1, alternating between a right offest and then a left offest. Assume \texttt{A[a...c]} returns a subset of the array between the indices $a$ and $c$ in constant time.
+\textbf{Answer: } 
+
+%Our divide and conquer algorithm choose a midpoint \texttt{mid} caclulated as the ceiling of the length of $A$ divided by 2. We then subset our price array incrementlally by taking the offset of the midpoint at every iteration and increasing it by 1, alternating between a right offest and then a left offest. Assume \texttt{A[a...c]} returns a subset of the array between the indices $a$ and $c$ in constant time.
 \begin{verbatim}
 divideConquer(A,n):
- mid = ceil(n/2)
- max = 0
- while 2i < n:
-  min = 2i+1 * min(A[mid-floor(i)...mid + ceil(i)])
-  if min > max:
-  	max = min
-  i+=0.5
- return max
+
+  // Helper function: find max stretch if must have A[i]  
+  MaxStretch(i)
+    maxValue = i
+    minElement = i
+    d = 1
+    
+    // Add elements left of i
+    for j = i-1, ..., 0
+      if (d+1) * min(A[j], i) > maxValue
+        d += 1
+        minElement = min(A[j], i)
+        maxValue = d * minElement
+      else
+        break
+        
+    // add element right of i
+    for j = i+1, ..., n
+      if (d+1) * min(A[j], i) > maxValue
+        d += 1
+        minElement = min(A[j], i)
+        maxValue = d * minElement
+      else
+        break   
+      return Stretch = maxValue  
+    
+    // Select pivot that is gauranteed in price stretch
+    pivot = ?
+    
+    
+    // Return max stretch which has pivot
+    return MaxStretch(pivot)
+    
+
 \end{verbatim}
 \item Give and briefly justify a good asymptotic bound on the runtime of
    your algorithm.
+   
+   Our helper function ``MaxStretch'' is $O(n)$, as the worst case is when the max stretch is the entire array. To find the pivot, we have no idea. So let's just assume $O(1)$. i.e. choose any pivot and pray it is in the max stretch. Thus our overall runtime would be $O(n)$
 \end{enumerate}
+
+
+
 
 \cleardoublepage
 \section{CS CSI}
